@@ -30,9 +30,11 @@ AHT10 ==> continuously monitor humidity ==> send data to server no matter what.
 ## Backend Processing (Inside flask /gravana?)
 REST API (`base_url`: TBD🙏🙏)
 ### Humidity Collection
-`GET /savehumidity` :  saves humidity into database + Check if need to send alert.
+`GET /savehumidity` :  saves humidity into database + Check if need to send alert.  
 **Parameters**:  
+
 | Name | Type | Description | 
+| --- | --- | --- | 
 | humidity | float | Humidity value (%RH) | 
 
 
