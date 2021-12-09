@@ -23,7 +23,7 @@ Preset different response messages in the OLED
 Then upon receiving web request, show corresponding thing (message) immediately + make corresponding sound in beeper.   
 (If cannot set up ESP8266 as web server externally, do periodic web reqeusts to server to active fetch info instead.)
 ### Board 2 (Install inside the piano)  
-This include the MIC , MAX4466, AHT10.
+This include the MIC , MAX4466, AHT10.  
 MIC - continuously monitor volume. ==> If volume exceeds threshold ==> code to activate MAX4466 detection ==> send FFT spectrum to server  
 AHT10 ==> continuously monitor humidity ==> send data to server no matter what. 
 
