@@ -2,10 +2,11 @@
 
 This repo might be useful if we successfully get MAX4466.
 https://github.com/adafruit/Adafruit_Learning_System_Guides/tree/main/Tiny_Music_Visualizer
-https://learn.adafruit.com/piccolo
-😂😂😂
-If using heroku deployment
-https://towardsdatascience.com/deploy-a-micro-flask-application-into-heroku-with-postgresql-database-d95fd0c19408
+https://learn.adafruit.com/piccolo   
+https://blog.yavilevich.com/2016/08/arduino-sound-level-meter-and-spectrum-analyzer/    
+😂😂😂   
+If using heroku deployment   
+https://towardsdatascience.com/deploy-a-micro-flask-application-into-heroku-with-postgresql-database-d95fd0c19408   
 
 
 ## Sensors to be used, and required functions on controller chip (ESP8266)
