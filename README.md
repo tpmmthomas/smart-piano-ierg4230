@@ -18,11 +18,14 @@ https://github.com/adafruit/Adafruit_Learning_System_Guides/tree/main/Tiny_Music
 We can use two ESP8266 boards. (Also separate project code into two boards).
 No need direct communication between the two boards. Make use of the web server for all communications.
 ### Board 1 (Facing front to users)
-Include only the OLED and RFID. (This part only do the access control.)  
+Include only the OLED, RFID, beeper. (This part only do the access control.)  
 Once users tap an RFID card ==> Send code to web server by REST API.   
 Preset different response messages in the OLED ==> Also set up a web request server in ESP8266 (is this possible?)   
-Then upon receiving web request, show corresponding thing (message) immediately.   
+Then upon receiving web request, show corresponding thing (message) immediately + make corresponding sound in beeper.   
+(If cannot set up ESP8266 as web server externally, do periodic web reqeusts to server to active fetch info instead.)
 ### Board 2 (Install inside the piano)  
+This include the MIC , MAX4466, AHT10.
+
 
 
 ## Backend Processing (Inside flask /gravana?)
@@ -37,3 +40,6 @@ Alert if:
 1.  Humidity exceeds threshold + Dehumidify tube not connected.
 2.  All access records (different msg for valid or invalid access).
 3.  Pitch is not right. 
+
+## Flowchart
+![GitHub Logo](/iot project smart piano.drawio.png)
