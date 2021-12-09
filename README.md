@@ -14,14 +14,26 @@ https://github.com/adafruit/Adafruit_Learning_System_Guides/tree/main/Tiny_Music
 - OLED：Show welcome message or warning message as prompted.
 - RFID: Tap cards to disable access control.  
 
-## Backend Processing
+## Hardware configuration 
+We can use two ESP8266 boards. (Also separate project code into two boards).
+No need direct communication between the two boards. Make use of the web server for all communications.
+### Board 1 (Facing front to users)
+Include only the OLED and RFID. (This part only do the access control.)
+Once users tap an RFID card ==> Send code to web server by REST API. 
+Preset different response messages in the OLED ==> Also set up a web request server in ESP8266 (is this possible?)
+Then upon receiving web request, show corresponding thing immediately.
+### Board 2 (Install inside the piano)  
 
 
-## Hardware configuration (also the project code separation)
-We can use two ESP8266 boards.
-Humidity: send reminder if above certain threshold.  
+## Backend Processing (Inside flask /gravana?)
+
 
 
 ## Frontend (Web)
 
 ## Frontend (mobile) (Notifications only)
+Use a telegram alert tool.  
+Alert if:   
+1.  Humidity exceeds threshold + Dehumidify tube not connected.
+2.  All access records (different msg for valid or invalid access).
+3.  Pitch is not right. 
