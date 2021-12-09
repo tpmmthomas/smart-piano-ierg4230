@@ -62,7 +62,7 @@ REST API (`base_url`: TBD🙏🙏)
 **Response:**  
 200: OK  
 
-### Access Record Update 
+### Audio Recording Update 
 `GET /audio` :  receives recorded audio with FFT analysis for further processing. + No matter tuning or not, calling of this api means someone is using the computer, hence check access control.
 
 **Parameters**:  
