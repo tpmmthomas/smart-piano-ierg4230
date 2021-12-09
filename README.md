@@ -18,10 +18,10 @@ https://github.com/adafruit/Adafruit_Learning_System_Guides/tree/main/Tiny_Music
 We can use two ESP8266 boards. (Also separate project code into two boards).
 No need direct communication between the two boards. Make use of the web server for all communications.
 ### Board 1 (Facing front to users)
-Include only the OLED and RFID. (This part only do the access control.)
-Once users tap an RFID card ==> Send code to web server by REST API. 
-Preset different response messages in the OLED ==> Also set up a web request server in ESP8266 (is this possible?)
-Then upon receiving web request, show corresponding thing immediately.
+Include only the OLED and RFID. (This part only do the access control.)  
+Once users tap an RFID card ==> Send code to web server by REST API.   
+Preset different response messages in the OLED ==> Also set up a web request server in ESP8266 (is this possible?)   
+Then upon receiving web request, show corresponding thing (message) immediately.   
 ### Board 2 (Install inside the piano)  
 
 
