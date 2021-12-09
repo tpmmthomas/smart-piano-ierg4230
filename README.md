@@ -39,7 +39,7 @@ REST API (`base_url`: TBD🙏🙏)
 | --- | --- | --- | 
 | humidity | float | Humidity value (%RH) | 
 
-**Response**
+**Response:**  
 200: OK  
 
 ### Access Record Update 
@@ -51,7 +51,7 @@ REST API (`base_url`: TBD🙏🙏)
 | --- | --- | --- | 
 | id | string | UID of the RFID card (in ascii, length 8) | 
 
-**Response**
+**Response:**  
 200: OK  
 
 ### Access Record Update 
@@ -63,14 +63,14 @@ REST API (`base_url`: TBD🙏🙏)
 | --- | --- | --- | 
 | data | TBD | TBD | 
 
-**Response**
+**Response:**  
 200: OK  
 
 ### Board 1 Command Update (Should be called by board 1 periodically)
 `GET /command` :  returns a list of commands to be executed by the board in JSON format.
 **Parameters**: None
 
-**Response**
+**Response:**  
 200: JSON Response as follows:
 - `"Status" : "OK" or "NOCMD"` (If received `NOCMD`, no need do anything)
 - `Data`:
