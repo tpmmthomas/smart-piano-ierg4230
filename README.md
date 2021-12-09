@@ -30,7 +30,7 @@ This include the MIC , MAX4466, AHT10.
 MIC - continuously monitor volume. ==> If volume exceeds threshold ==> code to activate MAX4466 detection ==> send FFT spectrum to server  
 AHT10 ==> continuously monitor humidity ==> send data to server no matter what. 
 
-## Backend Processing (Inside flask /gravana?)
+## Backend Processing (Flask)
 REST API (`base_url`: TBD🙏🙏)
 (TODO: require basic authentication??)  
 ### Humidity Collection
@@ -80,7 +80,7 @@ REST API (`base_url`: TBD🙏🙏)
   - `Command` : 1 -> show Welcome message on OLED (access valid) + welcome sound on beeper,  2-> show warning message (access invalid) + warning sound , 3 -> show unauthorized access message + Annoying sound  
 Example: `{"Status": "OK", "Data": {"Command": 1}}`  
 
-## Frontend (Web)
+## Frontend (Web) (Grafana / just inbuilt to flask?)
 Required Functions:  
 1. Show Access History from database
 2. Show change in humidity over time
