@@ -29,16 +29,53 @@ AHT10 ==> continuously monitor humidity ==> send data to server no matter what.
 
 ## Backend Processing (Inside flask /gravana?)
 REST API (`base_url`: TBD🙏🙏)
+(TODO: require basic authentication??)  
 ### Humidity Collection
 `GET /savehumidity` :  saves humidity into database + Check if need to send alert.  
+
 **Parameters**:  
 
 | Name | Type | Description | 
 | --- | --- | --- | 
 | humidity | float | Humidity value (%RH) | 
 
+**Response**
+200: OK  
 
+### Access Record Update 
+`GET /access` :  saves Access Record to Database + Check If it is an allowed user. (Then issue command to show corresponding text in OLED.)
 
+**Parameters**:  
+
+| Name | Type | Description | 
+| --- | --- | --- | 
+| id | string | UID of the RFID card (in ascii, length 8) | 
+
+**Response**
+200: OK  
+
+### Access Record Update 
+`GET /audio` :  receives recorded audio with FFT analysis for further processing. + No matter tuning or not, calling of this api means someone is using the computer, hence check access control.
+
+**Parameters**:  
+
+| Name | Type | Description | 
+| --- | --- | --- | 
+| data | TBD | TBD | 
+
+**Response**
+200: OK  
+
+### Board 1 Command Update (Should be called by board 1 periodically)
+`GET /command` :  returns a list of commands to be executed by the board in JSON format.
+**Parameters**: None
+
+**Response**
+200: JSON Response as follows:
+- `"Status" : "OK" or "NOCMD"` (If received `NOCMD`, no need do anything)
+- `Data`:
+  - `Command` : 1 -> show Welcome message on OLED (access valid) + welcome sound on beeper,  2-> show warning message (access invalid) + warning sound , 3 -> show unauthorized access message + Annoying sound  
+Example: `{"Status": "OK", "Data": {"Command": 1}}`  
 
 ## Frontend (Web)
 Required Functions:  
