@@ -6,7 +6,11 @@ https://learn.adafruit.com/piccolo
 https://blog.yavilevich.com/2016/08/arduino-sound-level-meter-and-spectrum-analyzer/    
 😂😂😂   
 If using heroku deployment   
-https://towardsdatascience.com/deploy-a-micro-flask-application-into-heroku-with-postgresql-database-d95fd0c19408   
+https://towardsdatascience.com/deploy-a-micro-flask-application-into-heroku-with-postgresql-database-d95fd0c19408  
+
+https://aliabdelaal.medium.com/telegram-bot-tutorial-using-python-and-flask-1fc634da9522    
+ 
+https://medium.com/tech-insights/how-to-deploy-a-telegram-bot-with-flask-pytelegrambotapi-gunicorn-and-postgresql-to-heroku-19d87959a65   
 
 
 ## Sensors to be used, and required functions on controller chip (ESP8266)
@@ -71,7 +75,7 @@ REST API (`base_url`: TBD🙏🙏)
 200: OK  
 
 ### Board 1 Command Update (Should be called by board 1 periodically)
-`GET /command` :  returns a list of commands to be executed by the board in JSON format.
+`GET /command` :  returns a list of commands to be executed by the board in JSON format.  
 **Parameters**: None
 
 **Response:**  
@@ -98,3 +102,6 @@ Alert if:
 
 ## Flowchart
 ![abc](flow.png)
+
+## Things not done (include in part 2 of the report)
+1. Authorization / Transfer of ownership
