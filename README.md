@@ -94,7 +94,6 @@ Required Functions:
 2. Show change in humidity over time
 3. Show Tuning Reminders and history  
 
-Later Also need to add our report to the webpage.  
 
 ## Frontend (mobile) (Notifications only)
 Use a telegram alert tool.  
@@ -102,6 +101,11 @@ Alert if:
 1.  Humidity exceeds threshold + Dehumidify tube not connected.
 2.  All access records (different msg for valid or invalid access).
 3.  Pitch is not right. 
+
+Required user interactions:  
+`/start` : add user to database   
+`/register [cid]`: add allowed rfid card  
+`/addtuning` : add tuning record  
 
 ## Flowchart
 ![abc](flow.png)
