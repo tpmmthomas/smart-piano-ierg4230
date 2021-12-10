@@ -20,13 +20,13 @@ def query_db(query, args=(), one=False):
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
-
-# @app.teardown_appcontext
-# def close_connection(exception):
-#     db = getattr(g, "_database", None)
-#     if db is not None:
-#         db.close()
-
+def modify_db(query):
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute(query)
+    conn.commit()
+    conn.close()
+    
 
 def init_db(app):
     with app.app_context():

@@ -12,6 +12,8 @@ https://aliabdelaal.medium.com/telegram-bot-tutorial-using-python-and-flask-1fc6
  
 https://medium.com/tech-insights/how-to-deploy-a-telegram-bot-with-flask-pytelegrambotapi-gunicorn-and-postgresql-to-heroku-19d87959a65   
 
+https://ithelp.ithome.com.tw/articles/10227760   (Influxdb with grafana)
+
 
 ## Sensors to be used, and required functions on controller chip (ESP8266)
 - MAX4466 Amplifier (Purchasing) -- Detect the frequency, send FFT spectrum to server. 
@@ -36,7 +38,7 @@ MIC - continuously monitor volume. ==> If volume exceeds threshold ==> code to a
 AHT10 ==> continuously monitor humidity ==> send data to server no matter what. 
 
 ## Backend Processing (Flask)
-REST API (`base_url`: TBD🙏🙏)
+REST API (`base_url`: `34.250.76.100:9876`🙏🙏)
 (TODO: require basic authentication??)  
 ### Humidity Collection
 `GET /savehumidity` :  saves humidity into database + Check if need to send alert.  
@@ -85,7 +87,8 @@ REST API (`base_url`: TBD🙏🙏)
   - `Command` : 1 -> show Welcome message on OLED (access valid) + welcome sound on beeper,  2-> show warning message (access invalid) + warning sound , 3 -> show unauthorized access message + Annoying sound  
 Example: `{"Status": "OK", "Data": {"Command": 1}}`  
 
-## Frontend (Web) (Grafana / just inbuilt to flask?)
+## Frontend (Web) (Grafana)  
+Access Endpoint : `34.150.76.100:3000`   
 Required Functions:  
 1. Show Access History from database
 2. Show change in humidity over time

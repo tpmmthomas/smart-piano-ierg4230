@@ -3,8 +3,9 @@ DROP TABLE IF EXISTS post;
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL
+  chatid TEXT UNIQUE NOT NULL,
+  username TEXT NOT NULL,
+  accesstype TEXT NOT NULL 
 );
 
 CREATE TABLE post (
@@ -15,3 +16,5 @@ CREATE TABLE post (
   body TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
+ -- humidity table as well
+ -- access record table
