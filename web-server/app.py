@@ -35,28 +35,58 @@ def set_webhook():
         return "webhook setup failed"
 
 
+@app.route("/savehumidity", methods=["GET"])
+def savehumid():
+    humid = request.args.get("humidity")
+    # Simply save to database
+    # If exceed threshold, send reminder (once every 30 mins)
+    return "OK", 200
+
+
+@app.route("/access", methods=["POST"])
+def saveaccess():
+    accesscode = request.values.get("id")
+    """ TODO
+    1. Check if id exists in database.
+    2. If yes, then disable access control (marked as var in db) for 30 mins.
+    3. Anyway, send relevant command to queue.
+    """
+    return "OK", 200
+
+
+@app.route("/audio", methods=["POST"])
+def saveaccess():
+    accesscode = request.values.get("data")
+    """ TODO
+    Check access control value from db.
+    If not allowed, then send command to queue.
+    Otherwise, say welcome 'user; command
+    """
+    return "OK", 200
+
+
 @app.route("/")
 def index():
     return jsonify({"message": "Hello,hello, World!"})
 
 
-@app.route("/db")
-def whh():
-    cur = db.get_db().cursor()
-    results = []
-    for user in db.query_db("select * from user"):
-        print(user["id"], user["username"])
-    return str(results)
+# @app.route("/db")
+# def whh():
+#     cur = db.get_db().cursor()
+#     results = []
+#     for user in db.query_db("select * from user"):
+#         print(user["id"], user["username"])
+#     return str(results)
 
 
-@app.route("/dbadd")
-def wh67h():
-    conn = db.get_db()
-    cur = conn.cursor()
-    cur.execute("INSERT INTO user VALUES (3,'abc','234')")
-    conn.commit()
-    conn.close()
-    return "Success!"
+# @app.route("/dbadd")
+# def wh67h():
+#     conn = db.get_db()
+#     cur = conn.cursor()
+#     cur.execute("INSERT INTO user VALUES (3,'abc','234')")
+#     conn.commit()
+#     conn.close()
+#     return "Success!"
 
 
 if __name__ == "__main__":

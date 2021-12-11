@@ -53,7 +53,7 @@ REST API (`base_url`: `34.150.76.100:9876`🙏🙏)
 200: OK  
 
 ### Access Record Update 
-`GET /access` :  saves Access Record to Database + Check If it is an allowed user. (Then issue command to show corresponding text in OLED.)
+`POST /access` :  saves Access Record to Database + Check If it is an allowed user. (Then issue command to show corresponding text in OLED.)
 
 **Parameters**:  
 
@@ -65,7 +65,7 @@ REST API (`base_url`: `34.150.76.100:9876`🙏🙏)
 200: OK  
 
 ### Audio Recording Update 
-`GET /audio` :  receives recorded audio with FFT analysis for further processing. + No matter tuning or not, calling of this api means someone is using the computer, hence check access control.
+`POST /audio` :  receives recorded audio with FFT analysis for further processing. + No matter tuning or not, calling of this api means someone is using the computer, hence check access control.
 
 **Parameters**:  
 
@@ -84,7 +84,8 @@ REST API (`base_url`: `34.150.76.100:9876`🙏🙏)
 200: JSON Response as follows:
 - `"Status" : "OK" or "NOCMD"` (If received `NOCMD`, no need do anything)
 - `Data`:
-  - `Command` : 1 -> show Welcome message on OLED (access valid) + welcome sound on beeper,  2-> show warning message (access invalid) + warning sound , 3 -> show unauthorized access message + Annoying sound  
+  - `Command` : 1 -> show Welcome message on OLED (access valid) + welcome sound on beeper,  2-> show warning message (access invalid) + warning sound , 3 -> show unauthorized access message + Annoying sound , 4 -> Show `[name] playing`, no sound   
+  - `Name` : optional parmeter for command 4 only   
 Example: `{"Status": "OK", "Data": {"Command": 1}}`  
 
 ## Frontend (Web) (Grafana)  
