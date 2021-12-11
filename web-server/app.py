@@ -3,13 +3,18 @@ import telegram
 from telebot.credentials import bot_token, URL
 from telebot.mastermind import get_response
 import db
+import logging
+
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+)
 
 global bot
 global TOKEN
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 app = Flask(__name__)
-
+logger = logging.getLogger(__name__)
 
 @app.route("/{}".format(TOKEN), methods=["POST"])
 def respond():
@@ -38,7 +43,14 @@ def set_webhook():
 @app.route("/savehumidity", methods=["GET"])
 def savehumid():
     humid = request.args.get("humidity")
-    # Simply save to database
+    if humid is None:
+        return "wrong request", 400
+    try:
+        humid = int(humid)
+    except:
+        return "must be integer", 400
+    db.add_db("Humidity",{'humidity': humid})
+    # logger.info(str(db.query_db("Select * from Humidity")))
     # If exceed threshold, send reminder (once every 30 mins)
     return "OK", 200
 
@@ -55,7 +67,7 @@ def saveaccess():
 
 
 @app.route("/audio", methods=["POST"])
-def saveaccess():
+def saveaudio():
     audio = request.values.get("data")
     """ TODO
     Check access control value from db.
@@ -99,5 +111,5 @@ def index():
 
 
 if __name__ == "__main__":
-    db.init_db(app)
-    app.run(threaded=True)
+    db.del_dball("Humidity")
+    app.run(host='0.0.0.0',port=9876,threaded=True)
