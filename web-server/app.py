@@ -56,13 +56,22 @@ def saveaccess():
 
 @app.route("/audio", methods=["POST"])
 def saveaccess():
-    accesscode = request.values.get("data")
+    audio = request.values.get("data")
     """ TODO
     Check access control value from db.
-    If not allowed, then send command to queue.
-    Otherwise, say welcome 'user; command
+    If not allowed, then send command 3 to queue.
+    Otherwise, send command 4 with username retrieved from db 
     """
     return "OK", 200
+
+
+@app.route("/command", methods=["GET"])
+def cmdok():
+    """
+    Retrieve command from db.
+    Craft suitable json response.
+    """
+    return jsonify({"a": "b"})
 
 
 @app.route("/")
