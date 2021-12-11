@@ -1,2 +1,2 @@
-# Please go to web-app-ierg4230 for details.
-https://github.com/tpmmthomas/web-app-ierg4230.git  
+# Server side applications deployed on cloud server
+Using Flask + Grafana + InfluxDB
