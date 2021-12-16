@@ -65,13 +65,13 @@ REST API (`base_url`: `http://34.150.76.100:9876`🙏🙏)
 200: OK  
 
 ### Audio Recording Update 
-`POST /audio` :  receives recorded audio with FFT analysis for further processing. + No matter tuning or not, calling of this api means someone is using the computer, hence check access control.
+`GET /audio` :  receives recorded audio frequency with FFT analysis for further processing. + No matter tuning or not, check vairiation of received values to determine if someone is using the computer, hence check access control.
 
 **Parameters**:  
 
 | Name | Type | Description | 
 | --- | --- | --- | 
-| data | TBD | TBD | 
+| frequency | float | Calculated Frequency in Hz (by FFT) | 
 
 **Response:**  
 200: OK  
