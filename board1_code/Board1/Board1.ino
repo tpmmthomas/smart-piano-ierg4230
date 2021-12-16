@@ -3,20 +3,51 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 
-// Temperature & Humidity
+// RFID
 #include <Wire.h>
-#include "Thinary_AHT10.h"
+#include "MFRC522_I2C.h"
 
-AHT10Class AHT10;
+#include <Adafruit_GFX.h>     //OLED
+#include <Adafruit_SSD1306.h> //OLED
 
-float Humidity;
-float Temperature;
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
-// Microphone
-const int ledPin1 = 16;       // GPIO-16(D0)
-const int ledPin2 = 2;        // GPIO-2(D4)
-const int micPin_analog = A0; // ADC
-const int micPin_digital = 12;// GPIO12(D6)
+// OLED
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+#define NUMFLAKES     10 // Number of snowflakes in the animation example
+
+#define LOGO_HEIGHT   16
+#define LOGO_WIDTH    16
+static const unsigned char PROGMEM logo_bmp[] =
+{ B00000000, B11000000,
+  B00000001, B11000000,
+  B00000001, B11000000,
+  B00000011, B11100000,
+  B11110011, B11100000,
+  B11111110, B11111000,
+  B01111110, B11111111,
+  B00110011, B10011111,
+  B00011111, B11111100,
+  B00001101, B01110000,
+  B00011011, B10100000,
+  B00111111, B11100000,
+  B00111111, B11110000,
+  B01111100, B11110000,
+  B01110000, B01110000,
+  B00000000, B00110000 };
+
+#define RST_PIN 14 // GPIO-14(D5) Pin on ESP8266
+
+// 0x3F is I2C address on SDA.
+//MFRC522 mfrc522(0x3F, RST_PIN);   // Create MFRC522 instance.
+MFRC522 mfrc522(0x28, RST_PIN);   // Create MFRC522 instance.
+
+// Buzzer
+Buzzer buzzer(14); // (Buzzer pin)
 
 #ifndef STASSID
 #define STASSID "REALNEW"
@@ -60,24 +91,46 @@ void setup(void) {
   pinMode(led, OUTPUT);
   digitalWrite(led, 0);
   
-  Serial.begin(9600);
+  Serial.begin(115200);
+  Serial.println("ESP8266-12E/F MFRC5522 RFID test program\n");
+  Serial.println("Build-in LED at GPIO-16(D0)");
+  Serial.println("I2C SDA Pin at GPIO-2(D4)");
+  Serial.println("I2C SCL Pin at GPIO-0(D3)");
   Wire.begin(2,0);
+  mfrc522.PCD_Init();             // Init MFRC522
+  ShowReaderDetails();            // Show details of PCD - MFRC522 Card Reader details
+  Serial.println(F("Scan PICC to see UID, type, and data blocks..."));
 
+  // OLED Setup
+  // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
+    Serial.println(F("SSD1306 allocation failed"));
+    for (;;);
+  }
+  
+  // Show initial display buffer contents on the screen --
+  // the library initializes this with an Adafruit splash screen.
+  display.display();
+  delay(2000); // Pause for 2 seconds
+
+  // Clear the buffer
+  display.clearDisplay();
+
+  // Draw a single pixel in white
+  display.drawPixel(10, 10, SSD1306_WHITE);
+  
+  ///OLED diplay 1st line
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 10);
+  // Display static text
+  display.println("IERG 4230 IoT MFRC522");
+  display.display();
+  
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   Serial.println("");
-  
-  if(AHT10.begin(eAHT10Address_Low))
-    Serial.println("Init AHT10 Sucess.");
-  else
-    Serial.println("Init AHT10 Failure.");
-  Serial.println("<<Thinary Eletronic AHT10 Module>>");
 
-  pinMode(ledPin1, OUTPUT);
-  pinMode(ledPin2, OUTPUT);
-  pinMode(micPin_analog, INPUT);
-  pinMode(micPin_digital, INPUT);
-  
   // Wait for connection
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -188,35 +241,95 @@ void loop(void) {
   server.handleClient();
   MDNS.update();
 
-  // for AHT10
-  Humidity = AHT10.GetHumidity();
-  Temperature = AHT10.GetTemperature();
-  
-  Serial.println(String("") + "AHT10 | Humidity(%RH):\t" + Humidity + "%");
-  Serial.println(String("") + "AHT10 | Temperature(℃):\t" + Temperature + "℃");
-  //  Serial.println(String("") + "Dewpoint(℃):\t" + AHT10.GetDewPoint() + "℃");
-  Serial.println();
+  // RFID
+  // Look for new cards, and select one if present
+  if (! mfrc522.PICC_IsNewCardPresent() || ! mfrc522.PICC_ReadCardSerial() )
+  {
+    ESP.wdtFeed();  // keep FEED the watchdog!
+    delay(200);
+    return;
+  }
 
+  display.clearDisplay();
+  // Now a card is selected. The UID and SAK is in mfrc522.uid.
+  display.setCursor(0, 10);
+  // Display static text
+  display.println("IERG 4230 IoT MFRC522");
+  display.display();
+
+  // Dump UID
+  Serial.println();
+  Serial.print(F("Card UID Length: "));
+  Serial.println(mfrc522.uid.size, HEX);
+  //OLED 3rd line
+  display.setCursor(0, 30);
+  display.print("Card UID Length: ");
+  display.println(mfrc522.uid.size, HEX);
+  display.display();
+
+  Serial.print(F("Card UID:"));
+  //OLED 5rd line
+  display.setCursor(0, 50);
+  display.print("Card UID: ");
+
+  display.display();
+  display.setCursor(55, 50);
+  for (byte i = 0; i < mfrc522.uid.size; i++)
+  {
+    Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
+    Serial.print(mfrc522.uid.uidByte[i], HEX);
+    // OLED 5rd line
+    // display.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
+    if (mfrc522.uid.uidByte[i] < 0x10)
+    {
+      display.print(" 0");
+    }
+    else
+    {
+      display.print(" ");
+    }
+    display.print(mfrc522.uid.uidByte[i], HEX);
+    display.display();
+  }
+  Serial.println();
   ESP.wdtFeed();
 
-  // Microphone
-  int micA_Status = analogRead(micPin_analog); // Analog value 0~1023
-  int micD_Status = digitalRead(micPin_digital); // Digital value 0 = volulme lager than threshold
+  // Buzzer
+  buzzer.begin(0);
 
-  Serial.print("Mic(Analog)=");
-  Serial.println(micA_Status);        // Display analog value
-  Serial.print("Mic(Digital)=");
-  Serial.println(micD_Status);        // Display digital value
-  digitalWrite(ledPin2, micD_Status); // DO = LOW => On board LED GPIO-2(D4) ON
+  /* Method - It creates a "normal distortion" effect on the Buzzer */
+  buzzer.distortion(NOTE_C3, NOTE_C5);
+  buzzer.distortion(NOTE_C5, NOTE_C3);
 
-  if (micA_Status >= 535) {
-    digitalWrite(ledPin1, LOW);
-    Serial.println("Sound detected, LED is ON");
-  }
-  else {
-    digitalWrite(ledPin1, HIGH);
-    Serial.println("LED OFF");
-  }
-  
+  /* Method - It creates a "fast distortion" effect on the Buzzer */
+  //  buzzer.fastDistortion(NOTE_C3, NOTE_C5);
+  //  buzzer.fastDistortion(NOTE_C5, NOTE_C3);
+
+  /* Method - It creates a "slow distortion" effect on the Buzzer */
+  //  buzzer.slowDistortion(NOTE_C3, NOTE_C5);
+  //  buzzer.slowDistortion(NOTE_C5, NOTE_C3);
+
+  buzzer.end(1000);
+
   delay(3000);
+}
+
+void ShowReaderDetails() {
+  // Get the MFRC522 software version
+  ESP.wdtFeed();
+  Serial.println("");
+  byte v = mfrc522.PCD_ReadRegister(mfrc522.VersionReg);
+  Serial.print(F("MFRC522 Software Version: 0x"));
+  Serial.print(v, HEX);
+  if (v == 0x91)
+    Serial.print(F(" = v1.0"));
+  else if (v == 0x92)
+    Serial.print(F(" = v2.0"));
+  else
+    Serial.print(F(" (unknown)"));
+  Serial.println("");
+  // When 0x00 or 0xFF is returned, communication probably failed
+  if ((v == 0x00) || (v == 0xFF)) {
+    Serial.println(F("WARNING: Communication failure, is the MFRC522 properly connected?"));
+  }
 }
