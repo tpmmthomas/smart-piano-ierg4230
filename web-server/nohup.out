@@ -1,0 +1,43 @@
+webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 03:38:54,364 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 03:38:54,365 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "app.py", line 108, in threaded_control
+    x = db.query_db('Select * from AccessFlag where time < now()-30m  and "control" == 1')
+  File "/home/thomas/smart-piano-ierg4230/web-server/db.py", line 45, in query_db
+    result = client.query(query)
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 521, in query
+    response = self.request(
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 378, in request
+    raise InfluxDBClientError(err_msg, response.status_code)
+influxdb.exceptions.InfluxDBClientError: 400: {"error":"error parsing query: found =, expected identifier, string, number, bool at line 1, char 65"}
+webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 03:39:52,572 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 03:39:52,572 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-16 03:48:46,818 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 03:48:46] "GET /command HTTP/1.1" 200 -
+2021-12-16 03:48:47,026 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 03:48:47] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2021-12-16 03:48:50,864 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 03:48:50] "GET /command HTTP/1.1" 200 -
+2021-12-16 03:49:13,922 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 03:49:13] "[31m[1mGET /access?id=123 HTTP/1.1[0m" 405 -
+2021-12-16 03:51:02,365 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 03:51:02] "POST /access?id=AB2C HTTP/1.1" 200 -
+2021-12-16 03:51:22,329 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 03:51:22] "GET /command HTTP/1.1" 200 -
+2021-12-16 03:51:39,110 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 03:51:39] "GET /command HTTP/1.1" 200 -
+2021-12-16 03:55:54,006 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 03:55:54] "GET /command HTTP/1.1" 200 -
+2021-12-16 03:55:55,533 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 03:55:55] "GET /command HTTP/1.1" 200 -
+2021-12-16 03:56:18,571 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 03:56:18] "GET / HTTP/1.1" 200 -

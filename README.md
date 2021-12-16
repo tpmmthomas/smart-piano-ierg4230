@@ -94,6 +94,8 @@ Required Functions:
 1. Show Access History from database
 2. Show change in humidity over time
 3. Show Tuning Reminders and history  
+4. A metric to show how much different for frequency
+5. show total usage time of piano
 
 
 ## Frontend (mobile) (Notifications only)
@@ -113,3 +115,4 @@ Required user interactions:
 
 ## Things not done (include in part 2 of the report)
 1. Authorization / Transfer of ownership
+2. Automatically link the humidity tube

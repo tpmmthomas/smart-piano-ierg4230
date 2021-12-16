@@ -24,22 +24,21 @@ def respond():
     chat_id = update.message.chat.id
     msg_id = update.message.message_id
     text = update.message.text.encode("utf-8").decode()
-    print("got text message :", text)
-    response = get_response(text)
+    logger.info("got text message : "+text)
+    response = get_response(text,chat_id,update.message.from_user.first_name)
     bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
     return "ok"
 
 
-@app.route("/setwebhook", methods=["GET", "POST"])
 def set_webhook():
     # we use the bot object to link the bot to our app which live
     # in the link provided by URL
     s = bot.setWebhook("{URL}{HOOK}".format(URL=URL, HOOK=TOKEN))
     # something to let us know things work
     if s:
-        return "webhook setup ok"
+        return "Webhook setup ok"
     else:
-        return "webhook setup failed"
+        return "Webhook setup failed"
 
 
 @app.route("/savehumidity", methods=["GET"])
@@ -60,26 +59,24 @@ def savehumid():
 @app.route("/access", methods=["POST"])
 def saveaccess():
     accesscode = request.values.get("id")
-    allowedlist = db.query_db("Select * from Access")
+    allowedlist = db.query_db("Select * from RegisteredAccess")
     is_allowed = False
+    uname = None
     for allowed in allowedlist:
         if allowed['code'] == accesscode:
             is_allowed = True
+            uname = allowed['name']
             break
     if is_allowed:
         db.del_dball("AccessFlag")
         db.add_db("AccessFlag",{"control":1})
+        db.add_db("AccessRecord",{"name": uname})
         db.add_db("Command",{"command":1})
     else:
         db.add_db("Command",{"command":2})
+        db.add_db("AccessRecord",{"name": "Unidentified (blocked)"})
         db.del_dball("AccessFlag")
         db.add_db("AccessFlag",{"control":0})
-
-    """ TODO
-    1. Check if id exists in database.
-    2. If yes, then disable access control (marked as var in db) for 30 mins.
-    3. Anyway, send relevant command to queue.
-    """
     return "OK", 200
 
 
@@ -96,11 +93,13 @@ def saveaudio():
 
 @app.route("/command", methods=["GET"])
 def cmdok():
-    """
-    Retrieve command from db.
-    Craft suitable json response.
-    """
-    return jsonify({"a": "b"})
+    cmd = db.query_db('Select * from Command GROUP BY * ORDER BY DESC LIMIT 1')
+    if len(cmd) > 0:
+        cmd = cmd[0]
+        db.del_dball("Command")
+        return jsonify({"Status":"OK","Data": cmd})
+    else:    
+        return jsonify({"Status": "NOCMD"})
 
 
 @app.route("/")
@@ -110,17 +109,21 @@ def index():
 def threaded_control():
     while True:
         time.sleep(5)
-        x = db.query_db('Select * from AccessFlag where time < now()-30m  and "control" == 1')
+        x = db.query_db('Select * from AccessFlag where time < now()-30m  and "control" = 1')
         if len(x) > 0:
             db.del_dball("AccessFlag")
             db.add_db("AccessFlag",{"control":0})
 
-
-
-
+def unsafe_reset_all():
+    db.del_dball("Humidity")
+    db.del_dball("User")
+    db.del_dball("AccessFlag")
+    db.del_dball("Command")
+    db.del_dball("RegisteredAccess")
 
 if __name__ == "__main__":
-    db.del_dball("Humidity")
+    unsafe_reset_all() #comment if needed
+    print(set_webhook())
     thread = threading.Thread(target=threaded_control)
     thread.start()
     app.run(host='0.0.0.0',port=9876,threaded=True)
