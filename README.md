@@ -38,7 +38,7 @@ MIC - continuously monitor volume. ==> If volume exceeds threshold ==> code to a
 AHT10 ==> continuously monitor humidity ==> send data to server no matter what. 
 
 ## Backend Processing (Flask)
-REST API (`base_url`: `34.150.76.100:9876`🙏🙏)
+REST API (`base_url`: `http://34.150.76.100:9876`🙏🙏)
 (TODO: require basic authentication??)  
 ### Humidity Collection
 `GET /savehumidity` :  saves humidity into database + Check if need to send alert.  
@@ -89,7 +89,7 @@ REST API (`base_url`: `34.150.76.100:9876`🙏🙏)
 Example: `{"Status": "OK", "Data": {"Command": 1}}`  
 
 ## Frontend (Web) (Grafana)  
-Access Endpoint : `34.150.76.100:3000`   
+Access Endpoint : `http://34.150.76.100:3000`   
 Required Functions:  
 1. Show Access History from database
 2. Show change in humidity over time

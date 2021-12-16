@@ -41,3 +41,526 @@ webhook setup ok
 2021-12-16 03:55:54,006 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 03:55:54] "GET /command HTTP/1.1" 200 -
 2021-12-16 03:55:55,533 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 03:55:55] "GET /command HTTP/1.1" 200 -
 2021-12-16 03:56:18,571 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 03:56:18] "GET / HTTP/1.1" 200 -
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Traceback (most recent call last):
+  File "app.py", line 135, in <module>
+    unsafe_reset_all() #comment if needed
+  File "app.py", line 128, in unsafe_reset_all
+    db.del_dball("User")
+  File "/home/thomas/smart-piano-ierg4230/web-server/db.py", line 38, in del_dball
+    client.query(f"Delete from {measurement}")
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 521, in query
+    response = self.request(
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 378, in request
+    raise InfluxDBClientError(err_msg, response.status_code)
+influxdb.exceptions.InfluxDBClientError: 400: {"error":"error parsing query: found USER, expected identifier at line 1, char 13"}
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 05:33:33,509 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 05:33:33,509 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Traceback (most recent call last):
+  File "app.py", line 136, in <module>
+    print(set_webhook())
+  File "app.py", line 36, in set_webhook
+    s = bot.setWebhook("{URL}{HOOK}".format(URL=URL, HOOK=TOKEN))
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/bot.py", line 130, in decorator
+    result = func(*args, **kwargs)
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/bot.py", line 2965, in set_webhook
+    result = self._post('setWebhook', data, timeout=timeout, api_kwargs=api_kwargs)
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/bot.py", line 295, in _post
+    return self.request.post(
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/utils/request.py", line 361, in post
+    result = self._request_wrapper(
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/utils/request.py", line 279, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Bad webhook: https url must be provided for webhook
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 05:35:21,099 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 05:35:21,100 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+Traceback (most recent call last):
+  File "app.py", line 140, in <module>
+    app.run(host='0.0.0.0',port=9876,ssl_context=context,threaded=True)
+  File "/home/thomas/.local/lib/python3.8/site-packages/flask/app.py", line 920, in run
+    run_simple(t.cast(str, host), port, self, **options)
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 1010, in run_simple
+    inner()
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 950, in inner
+    srv = make_server(
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 782, in make_server
+    return ThreadedWSGIServer(
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 704, in __init__
+    ssl_context = load_ssl_context(*ssl_context)
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 597, in load_ssl_context
+    ctx.load_cert_chain(cert_file, pkey_file)
+ssl.SSLError: [SSL: EE_KEY_TOO_SMALL] ee key too small (_ssl.c:4046)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 05:43:12,925 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 05:43:12,926 - werkzeug - INFO -  * Running on https://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-16 05:43:53,347 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 05:43:53] "GET / HTTP/1.1" 200 -
+2021-12-16 05:43:53,641 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 05:43:53] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Traceback (most recent call last):
+  File "app.py", line 136, in <module>
+    print(set_webhook())
+  File "app.py", line 36, in set_webhook
+    s = bot.setWebhook("{URL}{HOOK}".format(URL=URL, HOOK=TOKEN))
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/bot.py", line 130, in decorator
+    result = func(*args, **kwargs)
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/bot.py", line 2965, in set_webhook
+    result = self._post('setWebhook', data, timeout=timeout, api_kwargs=api_kwargs)
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/bot.py", line 295, in _post
+    return self.request.post(
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/utils/request.py", line 361, in post
+    result = self._request_wrapper(
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/utils/request.py", line 279, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Bad webhook: webhook can be set up only on ports 80, 88, 443 or 8443
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 05:45:41,744 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 05:45:41,745 - werkzeug - INFO -  * Running on https://10.170.0.2:8443/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 05:47:08,069 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 05:47:08,070 - werkzeug - INFO -  * Running on https://10.170.0.2:8443/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 05:48:30,696 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 05:48:30,696 - werkzeug - INFO -  * Running on https://10.170.0.2:8443/ (Press CTRL+C to quit)
+2021-12-16 05:48:37,095 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 05:48:37] "GET / HTTP/1.1" 200 -
+2021-12-16 05:48:38,151 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 05:48:38] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2021-12-16 05:48:40,140 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 05:48:40] "GET / HTTP/1.1" 200 -
+2021-12-16 05:48:49,675 - app - ERROR - Exception on /savehumidity [GET]
+Traceback (most recent call last):
+  File "/home/thomas/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/thomas/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/thomas/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/thomas/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "app.py", line 59, in savehumid
+    allusers = db.query_db('Select "chat_id" from Users')
+  File "/home/thomas/smart-piano-ierg4230/web-server/db.py", line 45, in query_db
+    result = client.query(query)
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 521, in query
+    response = self.request(
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 378, in request
+    raise InfluxDBClientError(err_msg, response.status_code)
+influxdb.exceptions.InfluxDBClientError: 400: {"error":"error parsing query: found USERS, expected identifier at line 1, char 23"}
+2021-12-16 05:48:49,677 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 05:48:49] "[35m[1mGET /savehumidity?humidity=123 HTTP/1.1[0m" 500 -
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 05:49:16,285 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 05:49:16,286 - werkzeug - INFO -  * Running on https://10.170.0.2:8443/ (Press CTRL+C to quit)
+2021-12-16 05:50:58,672 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 05:50:58] "GET / HTTP/1.1" 200 -
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 05:52:45,097 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 05:52:45,098 - werkzeug - INFO -  * Running on https://10.170.0.2:8443/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 05:57:04,593 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 05:57:04,593 - werkzeug - INFO -  * Running on https://10.170.0.2:8443/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 05:59:25,085 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 05:59:25,085 - werkzeug - INFO -  * Running on https://10.170.0.2:8443/ (Press CTRL+C to quit)
+2021-12-16 06:00:34,285 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 06:00:34] "GET / HTTP/1.1" 200 -
+2021-12-16 06:00:34,619 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 06:00:34] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2021-12-16 06:00:47,368 - werkzeug - INFO - 113.252.213.154 - - [16/Dec/2021 06:00:47] "[31m[1mGET /2103758778:AAHxPlHcWDP7-aqWdIWkQzn2ds9hWdwyOAg HTTP/1.1[0m" 405 -
+2021-12-16 06:01:13,188 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:01:13] "[31m[1mPOST /2103758778:AAHxPlHcWDP7-aqWdIWkQzn2ds9hWdwyOAg HTTP/1.1[0m" 400 -
+Hi
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+2103758778:AAHxPlHcWDP7-aqWdIWkQzn2ds9hWdwyOAg
+True
+Webhook setup ok
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:11:18,870 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:11:18,870 - werkzeug - INFO -  * Running on https://10.170.0.2:8443/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+Traceback (most recent call last):
+  File "app.py", line 9, in <module>
+    from telebot.tgbot import bot
+  File "/home/thomas/smart-piano-ierg4230/web-server/telebot/tgbot.py", line 23
+    global bot = updater.bot
+               ^
+SyntaxError: invalid syntax
+Exiting immediately!
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:20:07,987 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:20:07,988 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:20:53,462 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:20:53,462 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:24:19,794 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:24:19,794 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-16 06:24:23,614 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/ext/handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "/home/thomas/smart-piano-ierg4230/web-server/tgbot.py", line 19, in x
+    y = db.query_db('Select * from User where "chat_id" = \'{chat_id}\'')
+  File "/home/thomas/smart-piano-ierg4230/web-server/db.py", line 45, in query_db
+    result = client.query(query)
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 521, in query
+    response = self.request(
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 378, in request
+    raise InfluxDBClientError(err_msg, response.status_code)
+influxdb.exceptions.InfluxDBClientError: 400: {"error":"error parsing query: found USER, expected identifier at line 1, char 15"}
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:25:15,610 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:25:15,611 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-16 06:25:17,248 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/ext/handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "/home/thomas/smart-piano-ierg4230/web-server/tgbot.py", line 19, in x
+    y = db.query_db('Select * from User where "chat_id" = \'{chat_id}\'')
+  File "/home/thomas/smart-piano-ierg4230/web-server/db.py", line 45, in query_db
+    result = client.query(query)
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 521, in query
+    response = self.request(
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 378, in request
+    raise InfluxDBClientError(err_msg, response.status_code)
+influxdb.exceptions.InfluxDBClientError: 400: {"error":"error parsing query: found USER, expected identifier at line 1, char 15"}
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:25:36,798 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:25:36,799 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:26:30,103 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:26:30,103 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:28:44,023 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:28:44,023 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:38:50,355 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:38:50,355 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-16 06:39:14,533 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/ext/handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "/home/thomas/smart-piano-ierg4230/web-server/tgbot.py", line 29, in reg
+    y = db.query_db(f'Select "name" from User where "chat_id" = {chat_id}')
+  File "/home/thomas/smart-piano-ierg4230/web-server/db.py", line 45, in query_db
+    result = client.query(query)
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 521, in query
+    response = self.request(
+  File "/home/thomas/.local/lib/python3.8/site-packages/influxdb/client.py", line 378, in request
+    raise InfluxDBClientError(err_msg, response.status_code)
+influxdb.exceptions.InfluxDBClientError: 400: {"error":"error parsing query: found USER, expected identifier at line 1, char 20"}
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:40:43,725 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:40:43,726 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-16 06:40:53,023 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/thomas/.local/lib/python3.8/site-packages/telegram/ext/handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "/home/thomas/smart-piano-ierg4230/web-server/tgbot.py", line 38, in reg
+    db.add_db("RegisteredAccess",{'name':name,'code':code})
+UnboundLocalError: local variable 'code' referenced before assignment
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:41:45,607 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:41:45,607 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-16 06:44:51,774 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:44:51] "GET /savehumidity?humidity=1 HTTP/1.1" 200 -
+2021-12-16 06:45:18,592 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:45:18] "GET /savehumidity?humidity=12 HTTP/1.1" 200 -
+2021-12-16 06:45:50,312 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:45:50] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+2021-12-16 06:45:56,594 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:45:56] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 06:48:36,472 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 06:48:36,473 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-16 06:48:53,578 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:48:53] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+2021-12-16 06:49:04,998 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:49:04] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+2021-12-16 06:49:06,703 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:49:06] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+2021-12-16 06:49:26,573 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:49:26] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+2021-12-16 06:49:33,301 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:49:33] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+2021-12-16 06:49:35,860 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:49:35] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+2021-12-16 06:49:43,874 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:49:43] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+2021-12-16 06:49:56,076 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:49:56] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+2021-12-16 06:50:04,107 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 06:50:04] "GET /savehumidity?humidity=19 HTTP/1.1" 200 -
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 07:03:38,072 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 07:03:38,073 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-16 07:04:07,927 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 07:04:07] "POST /access?id=3443 HTTP/1.1" 200 -
+2021-12-16 07:04:37,688 - werkzeug - INFO - 54.86.50.139 - - [16/Dec/2021 07:04:37] "POST /access?id=3443 HTTP/1.1" 200 -
+2021-12-16 07:05:08,095 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:08] "GET /savehumidity?humidity=193 HTTP/1.1" 200 -
+2021-12-16 07:05:13,119 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:13] "GET /savehumidity?humidity=199 HTTP/1.1" 200 -
+2021-12-16 07:05:18,141 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:18] "GET /savehumidity?humidity=208 HTTP/1.1" 200 -
+2021-12-16 07:05:23,166 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:23] "GET /savehumidity?humidity=206 HTTP/1.1" 200 -
+2021-12-16 07:05:28,188 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:28] "GET /savehumidity?humidity=209 HTTP/1.1" 200 -
+2021-12-16 07:05:33,211 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:33] "GET /savehumidity?humidity=208 HTTP/1.1" 200 -
+2021-12-16 07:05:38,232 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:38] "GET /savehumidity?humidity=209 HTTP/1.1" 200 -
+2021-12-16 07:05:43,251 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:43] "GET /savehumidity?humidity=206 HTTP/1.1" 200 -
+2021-12-16 07:05:48,275 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:48] "GET /savehumidity?humidity=203 HTTP/1.1" 200 -
+2021-12-16 07:05:53,297 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:53] "GET /savehumidity?humidity=207 HTTP/1.1" 200 -
+2021-12-16 07:05:58,319 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:05:58] "GET /savehumidity?humidity=204 HTTP/1.1" 200 -
+2021-12-16 07:06:03,340 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:06:03] "GET /savehumidity?humidity=209 HTTP/1.1" 200 -
+2021-12-16 07:06:08,361 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:06:08] "GET /savehumidity?humidity=203 HTTP/1.1" 200 -
+2021-12-16 07:06:13,904 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:06:13] "GET /savehumidity?humidity=204 HTTP/1.1" 200 -
+2021-12-16 07:06:18,925 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:06:18] "GET /savehumidity?humidity=210 HTTP/1.1" 200 -
+2021-12-16 07:06:23,943 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:06:23] "GET /savehumidity?humidity=215 HTTP/1.1" 200 -
+2021-12-16 07:06:28,965 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:06:28] "GET /savehumidity?humidity=214 HTTP/1.1" 200 -
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-16 07:07:03,012 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-16 07:07:03,013 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-16 07:07:06,943 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:07:06] "GET /savehumidity?humidity=207 HTTP/1.1" 200 -
+2021-12-16 07:07:11,965 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:07:11] "GET /savehumidity?humidity=200 HTTP/1.1" 200 -
