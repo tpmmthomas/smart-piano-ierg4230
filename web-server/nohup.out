@@ -713,3 +713,12 @@ KeyboardInterrupt:
 2021-12-16 07:19:30,148 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:19:30] "GET /savehumidity?humidity=253 HTTP/1.1" 200 -
 2021-12-16 07:19:35,167 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:19:35] "GET /savehumidity?humidity=261 HTTP/1.1" 200 -
 2021-12-16 07:19:40,190 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:19:40] "GET /savehumidity?humidity=262 HTTP/1.1" 200 -
+2021-12-16 07:19:45,213 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:19:45] "GET /savehumidity?humidity=255 HTTP/1.1" 200 -
+2021-12-16 07:19:50,234 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:19:50] "GET /savehumidity?humidity=255 HTTP/1.1" 200 -
+2021-12-16 07:19:55,254 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:19:55] "GET /savehumidity?humidity=260 HTTP/1.1" 200 -
+2021-12-16 07:20:00,275 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:20:00] "GET /savehumidity?humidity=263 HTTP/1.1" 200 -
+2021-12-16 07:20:05,295 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:20:05] "GET /savehumidity?humidity=271 HTTP/1.1" 200 -
+2021-12-16 07:20:10,315 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:20:10] "GET /savehumidity?humidity=277 HTTP/1.1" 200 -
+2021-12-16 07:20:15,337 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:20:15] "GET /savehumidity?humidity=276 HTTP/1.1" 200 -
+2021-12-16 07:20:20,359 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:20:20] "GET /savehumidity?humidity=276 HTTP/1.1" 200 -
+2021-12-16 07:20:25,381 - werkzeug - INFO - 34.150.76.100 - - [16/Dec/2021 07:20:25] "GET /savehumidity?humidity=274 HTTP/1.1" 200 -
