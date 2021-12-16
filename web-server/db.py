@@ -24,7 +24,14 @@ def add_db(measurement, fields):
     return
 
 def del_db(measurement,times):
-    #TODO: parse times for deletion, add one and minus one in the least significant place
+    for timex in times:
+        timex = dateutil.parser.isoparse(timex)
+        timeb = timex + timedelta(microseconds = -1)
+        timea = timex + timedelta(microseconds = 1)
+        timeb = timeb.isoformat().split("+")[0]+"Z"
+        timea = timea.isoformat().split("+")[0]+"Z"
+        querystring = f"DELETE FROM {measurement} WHERE time > '{timeb}' and time < '{timea}'"
+        client.query(querystring)
     return
 
 def del_dball(measurement):
@@ -32,6 +39,9 @@ def del_dball(measurement):
     return
     
 def query_db(query):
+    '''
+        Returns a list of dictionary, in which all the fields inserted as well as the time will be included.
+    '''
     result = client.query(query)
     return list(result.get_points())
 

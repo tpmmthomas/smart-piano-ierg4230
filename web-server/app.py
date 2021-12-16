@@ -4,6 +4,8 @@ from telebot.credentials import bot_token, URL
 from telebot.mastermind import get_response
 import db
 import logging
+import threading
+import time
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -58,6 +60,21 @@ def savehumid():
 @app.route("/access", methods=["POST"])
 def saveaccess():
     accesscode = request.values.get("id")
+    allowedlist = db.query_db("Select * from Access")
+    is_allowed = False
+    for allowed in allowedlist:
+        if allowed['code'] == accesscode:
+            is_allowed = True
+            break
+    if is_allowed:
+        db.del_dball("AccessFlag")
+        db.add_db("AccessFlag",{"control":1})
+        db.add_db("Command",{"command":1})
+    else:
+        db.add_db("Command",{"command":2})
+        db.del_dball("AccessFlag")
+        db.add_db("AccessFlag",{"control":0})
+
     """ TODO
     1. Check if id exists in database.
     2. If yes, then disable access control (marked as var in db) for 30 mins.
@@ -90,26 +107,21 @@ def cmdok():
 def index():
     return jsonify({"message": "Hello,hello, World!"})
 
+def threaded_control():
+    while True:
+        time.sleep(5)
+        x = db.query_db('Select * from AccessFlag where time < now()-30m  and "control" == 1')
+        if len(x) > 0:
+            db.del_dball("AccessFlag")
+            db.add_db("AccessFlag",{"control":0})
 
-# @app.route("/db")
-# def whh():
-#     cur = db.get_db().cursor()
-#     results = []
-#     for user in db.query_db("select * from user"):
-#         print(user["id"], user["username"])
-#     return str(results)
 
 
-# @app.route("/dbadd")
-# def wh67h():
-#     conn = db.get_db()
-#     cur = conn.cursor()
-#     cur.execute("INSERT INTO user VALUES (3,'abc','234')")
-#     conn.commit()
-#     conn.close()
-#     return "Success!"
 
 
 if __name__ == "__main__":
     db.del_dball("Humidity")
+    thread = threading.Thread(target=threaded_control)
+    thread.start()
     app.run(host='0.0.0.0',port=9876,threaded=True)
+
