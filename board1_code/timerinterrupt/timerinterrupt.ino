@@ -36,27 +36,24 @@
 #define _TIMERINTERRUPT_LOGLEVEL_     0
 
 #include "ESP8266TimerInterrupt.h"
+#include "arduinoFFT.h"
 
 #ifndef LED_BUILTIN
   #define LED_BUILTIN       2         // Pin D4 mapped to pin GPIO2/TXD1 of ESP8266, NodeMCU and WeMoS, control on-board LED
 #endif
 
-volatile uint32_t lastMillis = 0;
+arduinoFFT FFT = arduinoFFT();
+volatile uint32_t samplei = 0;
+const uint16_t samples = 512;
+const double samplingFrequency = 8000;
+volatile double sReal[samples];
+double vReal[samples];
+double vImag[samples];
 
 void TimerHandler()
 {
-  static bool toggle = false;
-  static bool started = false;
-
-  if (!started)
-  {
-    started = true;
-    pinMode(LED_BUILTIN, OUTPUT);
-  }
-  Serial.println("sdf");
-  //timer interrupt toggles pin LED_BUILTIN
-//  digitalWrite(LED_BUILTIN, toggle);
-//  toggle = !toggle;
+  if(samplei >= samples) return;
+  sReal[samplei++] = (double)analogRead(A0);
 }
 
 #define TIMER_FREQ_HZ 8000
@@ -70,22 +67,29 @@ void setup()
   while (!Serial);
   
   delay(300);
-
-  Serial.print(F("\nStarting Argument_None on ")); Serial.println(ARDUINO_BOARD);
-  Serial.println(ESP8266_TIMER_INTERRUPT_VERSION);
-  Serial.print(F("CPU Frequency = ")); Serial.print(F_CPU / 1000000); Serial.println(F(" MHz"));
-
   // Interval in microsecs
   if (ITimer.attachInterrupt(TIMER_FREQ_HZ, TimerHandler))
   {
-    lastMillis = millis();
-    Serial.print(F("Starting  ITimer OK, millis() = ")); Serial.println(lastMillis);
+    Serial.println(("Starting  ITimer OK"));
   }
   else
-    Serial.println(F("Can't set ITimer correctly. Select another freq. or interval"));
+    Serial.println(("Can't set ITimer correctly. Select another freq. or interval"));
 }
 
 void loop()
 {
-
+  if(samplei >= samples){
+    for(int i=0;i<samples;i++){
+      vReal[i] = sReal[i];
+      vImag[i]=0.0;
+    }
+    FFT.Windowing(vReal,samples,FFT_WIN_TYP_HAMMING,FFT_FORWARD);
+    FFT.Compute(vReal, vImag, samples, FFT_FORWARD);
+    FFT.ComplexToMagnitude(vReal, vImag, samples);
+    double x = FFT.MajorPeak(vReal, samples, samplingFrequency);
+    Serial.print("Calculated Frequency: ");
+    Serial.println(x,6);
+    delay(1000);
+    samplei = 0;
+  }
 }

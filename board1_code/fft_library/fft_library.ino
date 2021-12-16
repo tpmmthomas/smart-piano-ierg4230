@@ -83,7 +83,10 @@ void loop()
   PrintVector(vReal, (samples >> 1), SCL_FREQUENCY);
   double x = FFT.MajorPeak(vReal, samples, samplingFrequency);
   Serial.println(x, 6);
-  while(1); /* Run Once */
+  while(1){
+    /* Run Once */
+    delay(10000);
+  }
   // delay(2000); /* Repeat after delay */
 }
 
