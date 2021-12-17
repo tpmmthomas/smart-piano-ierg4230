@@ -1,7 +1,23 @@
+/**
+   BasicHTTPClient.ino
+
+    Created on: 24.05.2015
+
+*/
+
+#include <Arduino.h>
+
 #include <ESP8266WiFi.h>
+#include <ESP8266WiFiMulti.h>
+
+#include <ESP8266HTTPClient.h>
+
 #include <WiFiClient.h>
-#include <ESP8266WebServer.h>
-#include <ESP8266mDNS.h>
+
+ESP8266WiFiMulti WiFiMulti;
+
+// Custom Definition
+#include "IERG4230.h"
 
 // Temperature & Humidity
 #include <Wire.h>
@@ -12,211 +28,237 @@ AHT10Class AHT10;
 float Humidity;
 float Temperature;
 
-// Microphone
-const int ledPin1 = 16;       // GPIO-16(D0)
-const int ledPin2 = 2;        // GPIO-2(D4)
-const int micPin_analog = A0; // ADC
-const int micPin_digital = 12;// GPIO12(D6)
+// Mic
+//const int micPin_analog = A0; // ADC
+//const int micPin_digital = 12;// GPIO12(D6)
 
-#ifndef STASSID
-#define STASSID "REALNEW"
-#define STAPSK  "1155147592"
-#endif
+// MAX4466
+// TODO
 
-const char* ssid = STASSID;
-const char* password = STAPSK;
 
-ESP8266WebServer server(80);
 
-const int led = 13;
+// Events
+osEvent th_event, mic_event, fft_event, wifi_event;
+osEvent test_event;
 
-void handleRoot() {
-  digitalWrite(led, 1);
-  server.send(200, "text/plain", "hello from esp8266!\r\n");
-  digitalWrite(led, 0);
-}
 
-void handleNotFound() {
-  digitalWrite(led, 1);
-  String message = "File Not Found\n\n";
-  message += "URI: ";
-  message += server.uri();
-  message += "\nMethod: ";
-  message += (server.method() == HTTP_GET) ? "GET" : "POST";
-  message += "\nArguments: ";
-  message += server.args();
-  message += "\n";
-  for (uint8_t i = 0; i < server.args(); i++) {
-    message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
-  }
-  server.send(404, "text/plain", message);
-  digitalWrite(led, 0);
-}
+//************************************************************
+void setup() {
+  th_event.timerSet(100);
+//  mic_event.timerSet(100);
+//  fft_event.timerSet(100);
+//  wifi_event.timerSet(100);
 
-void setup(void) {
+  test_event.timerSet(100);
+
+  // init for ATH10 (temperature & humidity)
   ESP.wdtDisable();
   ESP.wdtFeed();
- 
-  pinMode(led, OUTPUT);
-  digitalWrite(led, 0);
-  
-  Serial.begin(9600);
+
+  Serial.begin(115200);
   Wire.begin(2,0);
 
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  Serial.println("");
-  
   if(AHT10.begin(eAHT10Address_Low))
     Serial.println("Init AHT10 Sucess.");
   else
     Serial.println("Init AHT10 Failure.");
   Serial.println("<<Thinary Eletronic AHT10 Module>>");
 
-  pinMode(ledPin1, OUTPUT);
-  pinMode(ledPin2, OUTPUT);
-  pinMode(micPin_analog, INPUT);
-  pinMode(micPin_digital, INPUT);
-  
-  // Wait for connection
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.print("Connected to ");
-  Serial.println(ssid);
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-
-  if (MDNS.begin("esp8266")) {
-    Serial.println("MDNS responder started");
-  }
-
-  server.on("/", handleRoot);
-
-  server.on("/inline", []() {
-    server.send(200, "text/plain", "this works as well");
-  });
-
-  server.on("/gif", []() {
-    static const uint8_t gif[] PROGMEM = {
-      0x47, 0x49, 0x46, 0x38, 0x37, 0x61, 0x10, 0x00, 0x10, 0x00, 0x80, 0x01,
-      0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0x2c, 0x00, 0x00, 0x00, 0x00,
-      0x10, 0x00, 0x10, 0x00, 0x00, 0x02, 0x19, 0x8c, 0x8f, 0xa9, 0xcb, 0x9d,
-      0x00, 0x5f, 0x74, 0xb4, 0x56, 0xb0, 0xb0, 0xd2, 0xf2, 0x35, 0x1e, 0x4c,
-      0x0c, 0x24, 0x5a, 0xe6, 0x89, 0xa6, 0x4d, 0x01, 0x00, 0x3b
-    };
-    char gif_colored[sizeof(gif)];
-    memcpy_P(gif_colored, gif, sizeof(gif));
-    // Set the background to a random set of colors
-    gif_colored[16] = millis() % 256;
-    gif_colored[17] = millis() % 256;
-    gif_colored[18] = millis() % 256;
-    server.send(200, "image/gif", gif_colored, sizeof(gif_colored));
-  });
-
-  server.onNotFound(handleNotFound);
-
-  /////////////////////////////////////////////////////////
-  // Hook examples
-
-  server.addHook([](const String & method, const String & url, WiFiClient * client, ESP8266WebServer::ContentTypeFunction contentType) {
-    (void)method;      // GET, PUT, ...
-    (void)url;         // example: /root/myfile.html
-    (void)client;      // the webserver tcp client connection
-    (void)contentType; // contentType(".html") => "text/html"
-    Serial.printf("A useless web hook has passed\n");
-    Serial.printf("(this hook is in 0x%08x area (401x=IRAM 402x=FLASH))\n", esp_get_program_counter());
-    return ESP8266WebServer::CLIENT_REQUEST_CAN_CONTINUE;
-  });
-
-  server.addHook([](const String&, const String & url, WiFiClient*, ESP8266WebServer::ContentTypeFunction) {
-    if (url.startsWith("/fail")) {
-      Serial.printf("An always failing web hook has been triggered\n");
-      return ESP8266WebServer::CLIENT_MUST_STOP;
-    }
-    return ESP8266WebServer::CLIENT_REQUEST_CAN_CONTINUE;
-  });
-
-  server.addHook([](const String&, const String & url, WiFiClient * client, ESP8266WebServer::ContentTypeFunction) {
-    if (url.startsWith("/dump")) {
-      Serial.printf("The dumper web hook is on the run\n");
-
-      // Here the request is not interpreted, so we cannot for sure
-      // swallow the exact amount matching the full request+content,
-      // hence the tcp connection cannot be handled anymore by the
-      // webserver.
-#ifdef STREAMSEND_API
-      // we are lucky
-      client->sendAll(Serial, 500);
-#else
-      auto last = millis();
-      while ((millis() - last) < 500) {
-        char buf[32];
-        size_t len = client->read((uint8_t*)buf, sizeof(buf));
-        if (len > 0) {
-          Serial.printf("(<%d> chars)", (int)len);
-          Serial.write(buf, len);
-          last = millis();
-        }
-      }
-#endif
-      // Two choices: return MUST STOP and webserver will close it
-      //                       (we already have the example with '/fail' hook)
-      // or                  IS GIVEN and webserver will forget it
-      // trying with IS GIVEN and storing it on a dumb WiFiClient.
-      // check the client connection: it should not immediately be closed
-      // (make another '/dump' one to close the first)
-      Serial.printf("\nTelling server to forget this connection\n");
-      static WiFiClient forgetme = *client; // stop previous one if present and transfer client refcounter
-      return ESP8266WebServer::CLIENT_IS_GIVEN;
-    }
-    return ESP8266WebServer::CLIENT_REQUEST_CAN_CONTINUE;
-  });
-
-  // Hook examples
-  /////////////////////////////////////////////////////////
-
-  server.begin();
-  Serial.println("HTTP server started");
-
   delay(500);
+
+  // init for mic
+//  pinMode(micPin_analog, INPUT);
+//  pinMode(micPin_digital, INPUT);
+
+  // init for MAX4466 (FFT) 
+  // TODO
+
+
+
+  // Serial.setDebugOutput(true);
+
+//  Serial.println();
+//  Serial.println();
+//  Serial.println();
+//
+//  for (uint8_t t = 4; t > 0; t--) {
+//    Serial.printf("[SETUP] WAIT %d...\n", t);
+//    Serial.flush();
+//    delay(1000);
+//  }
+
+  WiFi.mode(WIFI_STA);
+  WiFiMulti.addAP("REALNEW", "1155147592");
 }
 
-void loop(void) {
-  server.handleClient();
-  MDNS.update();
-
-  // for AHT10
-  Humidity = AHT10.GetHumidity();
-  Temperature = AHT10.GetTemperature();
+void loop() {
   
-  Serial.println(String("") + "AHT10 | Humidity(%RH):\t" + Humidity + "%");
-  Serial.println(String("") + "AHT10 | Temperature(℃):\t" + Temperature + "℃");
-  //  Serial.println(String("") + "Dewpoint(℃):\t" + AHT10.GetDewPoint() + "℃");
+  if (osEvent::osTimer != millis()) timeStampUpdate();
+  if (th_event.isSet()) th_event_handler();
+//  if (mic_event.isSet()) mic_event_handler();
+//  if (fft_event.isSet()) fft_event_handler();
+//  if (wifi_event.isSet()) wifi_event_handler();
+  
+  if (test_event.isSet()) test_event_handler();
+  
+  
+
+//  delay(10000);
+}
+
+void timeStampUpdate(void)   // no need to modify this function unless you know what you are doing.
+{
+  int i;
+  unsigned long temp;
+  temp = millis();
+  if (osEvent::osTimer > temp) i = 1;
+  else i = (int)(temp - osEvent::osTimer);
+  osEvent::osTimer = temp;
+  //---- user add their own tasks if necessary
+  th_event.timerUpdate(i);
+//  mic_event.timerUpdate(i);
+//  fft_event.timerUpdate(i);
+//  wifi_event.timerUpdate(i);
+
+  test_event.timerUpdate(i);
+}
+
+// Event Handlers
+void th_event_handler(void){
+  th_event.clean();
+  
+  // get the temperature & humidity
+  Temperature = AHT10.GetTemperature();
+  Humidity = AHT10.GetHumidity();
+  
+  Serial.println(String("") + "Temperature(℃):\t" + Temperature + "℃");
+  Serial.println(String("") + "Humidity(%RH):\t\t" + Humidity + "%");
   Serial.println();
 
   ESP.wdtFeed();
 
-  // Microphone
-  int micA_Status = analogRead(micPin_analog); // Analog value 0~1023
-  int micD_Status = digitalRead(micPin_digital); // Digital value 0 = volulme lager than threshold
+  // send data to server
+  // TODO
+  if ((WiFiMulti.run() == WL_CONNECTED)) {
 
-  Serial.print("Mic(Analog)=");
-  Serial.println(micA_Status);        // Display analog value
-  Serial.print("Mic(Digital)=");
-  Serial.println(micD_Status);        // Display digital value
-  digitalWrite(ledPin2, micD_Status); // DO = LOW => On board LED GPIO-2(D4) ON
+    WiFiClient client;
 
-  if (micA_Status >= 535) {
-    digitalWrite(ledPin1, LOW);
-    Serial.println("Sound detected, LED is ON");
+    HTTPClient http;
+
+    Serial.print("[HTTP] begin...\n");
+    if (http.begin(client, "http://34.150.76.100:9876")) {  // HTTP
+      
+      Serial.print("[HTTP] GET...\n");
+      // start connection and send HTTP header
+//      int httpCode = http.GET();
+//      int httpCode = http.POST("temp="+to_string(Temperature)+"?humid="+to_string(Humidity));
+//      int httpCode = http.POST("123");
+
+      // httpCode will be negative on error
+      if (httpCode > 0) {
+        // HTTP header has been send and Server response header has been handled
+        Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+
+        // file found at server
+        if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+          String payload = http.getString();
+          Serial.println(payload);
+        }
+      } else {
+        Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+      }
+
+      http.end();
+    } else {
+      Serial.printf("[HTTP} Unable to connect\n");
+    }
   }
-  else {
-    digitalWrite(ledPin1, HIGH);
-    Serial.println("LED OFF");
+
+  // monitor every 15 seconds
+  th_event.timerSet(15000);
+}
+
+
+//void mic_event_handler(void){
+//  mic_event.clean();
+//  
+//  // get the sound
+//  int micA_Status = analogRead(micPin_analog); // Analog value 0~1023
+//  int micD_Status = digitalRead(micPin_digital); // Digital value 0 = volulme lager than threshold
+//
+//  Serial.print("Mic(Analog)=");
+//  Serial.println(micA_Status);        // Display analog value
+//  Serial.print("Mic(Digital)=");
+//  Serial.println(micD_Status);        // Display digital value
+//
+//  // do something when volume exceeds threshold
+//  if (micA_Status >= 535) {
+//    Serial.println("Sound detected");
+//  }
+//  else {
+//    Serial.println("No sound detected");
+//  }
+//
+//  // monitor every 0.5 seconds
+//  mic_event.timerSet(500);
+//}
+
+
+//void fft_event_handler(void){
+//  fft_event.clean();
+//
+//  Serial.println("FFT");
+//  fft_event.timerSet(1000);
+//}
+
+
+void wifi_event_handler(void){
+//  wifi_event.clean();
+  Serial.println("Wi-Fi");
+
+  // PROBLEM: Must run the below then other code, no multitasking
+
+  // wait for WiFi connection
+  if ((WiFiMulti.run() == WL_CONNECTED)) {
+
+    WiFiClient client;
+
+    HTTPClient http;
+
+    Serial.print("[HTTP] begin...\n");
+    if (http.begin(client, "http://jigsaw.w3.org/HTTP/connection.html")) {  // HTTP
+      
+      Serial.print("[HTTP] GET...\n");
+      // start connection and send HTTP header
+      int httpCode = http.GET();
+
+      // httpCode will be negative on error
+      if (httpCode > 0) {
+        // HTTP header has been send and Server response header has been handled
+        Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+
+        // file found at server
+        if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+          String payload = http.getString();
+          Serial.println(payload);
+        }
+      } else {
+        Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+      }
+
+      http.end();
+    } else {
+      Serial.printf("[HTTP} Unable to connect\n");
+    }
   }
-  
-  delay(3000);
+
+//  wifi_event.timerSet(10000);
+}
+
+
+void test_event_handler(void){
+  test_event.clean();
+
+  Serial.println("HELLOP");
+  test_event.timerSet(1000);
 }
