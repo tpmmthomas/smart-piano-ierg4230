@@ -7,6 +7,7 @@ import logging
 import threading
 import time
 from tgbot import bot
+from frequencies import notelist,freqlist
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
@@ -15,30 +16,7 @@ logging.basicConfig(
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
 
-# @app.route("/{}".format(TOKEN), methods=["POST"])
-# def respond():
-#     print("Hi")
-#     update = telegram.Update.de_json(request.get_json(force=True), bot)
-#     chat_id = update.message.chat.id
-#     msg_id = update.message.message_id
-#     text = update.message.text.encode("utf-8").decode()
-#     logger.info("got text message : "+text)
-#     response = get_response(text,chat_id,update.message.from_user.first_name)
-#     bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
-#     return "ok"
-
-
-# def set_webhook():
-#     # we use the bot object to link the bot to our app which live
-#     # in the link provided by URL
-#     s = bot.setWebhook("{URL}{HOOK}".format(URL=URL, HOOK=TOKEN),certificate=open('server.crt','rb'))
-#     # something to let us know things work
-#     if s:
-#         return "Webhook setup ok"
-#     else:
-#         return "Webhook setup failed"
-
-
+print(notelist,freqlist)
 @app.route("/savehumidity", methods=["GET"])
 def savehumid():
     humid = request.args.get("humidity")
@@ -92,14 +70,17 @@ def saveaccess():
     return "OK", 200
 
 
-@app.route("/audio", methods=["POST"])
+@app.route("/audio", methods=["GET"])
 def saveaudio():
-    audio = request.values.get("data")
-    """ TODO
-    Check access control value from db.
-    If not allowed, then send command 3 to queue.
-    Otherwise, send command 4 with username retrieved from db 
-    """
+    audio = request.args.get("frequency")
+    if audio is None:
+        return "wrong request",400
+    try:
+        audio = float(audio)
+    except:
+        return "must be a float value", 400
+    db.add_db("Frequency",{"frequency":audio})
+    #Further process is done in threaded control, because this endpoint is called too often.
     return "OK", 200
 
 
@@ -121,14 +102,62 @@ def index():
 def threaded_control():
     while True:
         time.sleep(5)
+        #Clear Reminder Log to allow new reminders
+        y = db.query_db('Select * from ReminderLog where time > now()-30m')
+        if len(y) == 0:
+            db.del_dball("ReminderLog")
+        #Check if being accessed
+        z = db.query_db('Select mean("frequency"),stddev("frequency") from Frequency where time > now()-30s')
+        if len(z) == 0:
+            fmean,fsd = None,None
+        else:
+            fmean,fsd = z[0]['mean'],z[0]['stddev']
+        if fmean is not None and fsd is not None and fmean > 150 and fsd > 100:
+            #is_playing
+            in_use = db.query_db('Select * from InuseFlag')[0]['control']
+            if in_use == 0:
+                db.del_dball("InuseFlag")
+                db.add_db("InuseFlag",{"control":1})
+                db.add_db("UseRecord",{"start_use":1})
+                access_control = db.query_db('Select * from AccessFlag')[0]['control']
+                if access_control == 0:
+                    db.add_db("Command",{'command':3})
+                else:
+                    cuser = db.query_db('Select name from AccessRecord GROUP BY * ORDER BY DESC LIMIT 1')[0]['name']
+                    db.add_db("Command",{'command':4,'name': cuser})
+        else:
+            #not_playing
+            in_use = db.query_db('Select * from InuseFlag')[0]['control']
+            if in_use == 1:
+                db.del_dball("InuseFlag")
+                db.add_db("InuseFlag",{"control":0})
+                db.add_db("UseRecord",{"start_use":0})
+        # Check if tuning mode is opened.
+        r = db.query_db('Select mean("frequency"),stddev("frequency") from Frequency where time > now()-5s')
+        if len(r) == 0:
+            tunemean,tunesd = None,None
+        else:
+            tunemean,tunesd = r[0]['mean'],r[0]['stddev']
+        if tunemean is not None and tunesd is not None and tunemean >= freqlist[0] and tunemean < freqlist[-1] and tunesd < 20:
+            for i,freq in enumerate(freqlist):
+                if tunemean >= freq:
+                    tempindex = i
+                    break
+            correctindex = tempindex if abs(tunemean-freqlist[tempindex]) < abs(tunemean-freqlist[tempindex+1]) else tempindex + 1
+            accepted_deviation = (freqlist[tempindex+1]-freqlist[tempindex])/4
+            if abs(tunemean-freqlist[correctindex]) > accepted_deviation:
+                db.add_db("TuneReminders",{"note":notelist[correctindex],"detected_frequency":tunemean,"correct_frequency":freqlist[correctindex]})
+            allusers = db.query_db('Select "chat_id" from Usertb')
+            msg = f"Tune Reminder: Detected Frequency {tunemean:.2f}Hz for note {notelist[correctindex]} while the correct frequency should be {freqlist[correctindex]}Hz. A tuning service will be scheduled for you."
+            for userx in allusers:
+                chat_id = userx['chat_id']
+                bot.sendMessage(chat_id,msg)
+
+        # Revoke access since time has passed
         x = db.query_db('Select * from AccessFlag where time < now()-30m  and "control" = 1')
         if len(x) > 0:
             db.del_dball("AccessFlag")
             db.add_db("AccessFlag",{"control":0})
-        y = db.query_db('Select * from ReminderLog where time > now()-30m')
-        if len(y) == 0:
-            db.del_dball("ReminderLog")
-
 
 def unsafe_reset_all():
     db.del_dball("Humidity")
@@ -137,6 +166,13 @@ def unsafe_reset_all():
     db.del_dball("Command")
     db.del_dball("RegisteredAccess")
     db.del_dball("ReminderLog")
+    db.del_dball("InuseFlag")
+    db.del_dball("Frequency")
+    db.del_dball("UseRecord")
+    db.del_dball("Tuning")
+    db.del_dball("TuneReminders")
+    db.add_db("InuseFlag",{"control":0})
+    db.add_db("AccessFlag",{"control":0})
 
 if __name__ == "__main__":
     unsafe_reset_all() #comment if needed

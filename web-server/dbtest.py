@@ -44,7 +44,7 @@ def query_db(query):
     return list(result.get_points())
 
  
-x = query_db('Select * from Humidity where time < now()-30m and "humidity" = 981')
+x = query_db('Select mean("humidity"),stddev("humidity") from Humidity where time > now()-5s')
 print(x)
 
 # timex = x[0]['time']

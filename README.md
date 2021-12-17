@@ -84,9 +84,9 @@ REST API (`base_url`: `http://34.150.76.100:9876`🙏🙏)
 200: JSON Response as follows:
 - `"Status" : "OK" or "NOCMD"` (If received `NOCMD`, no need do anything)
 - `Data`:
-  - `Command` : 1 -> show Welcome message on OLED (access valid) + welcome sound on beeper,  2-> show warning message (access invalid) + warning sound , 3 -> show unauthorized access message + Annoying sound , 4 -> Show `[name] playing`, no sound   
-  - `Name` : optional parmeter for command 4 only   
-Example: `{"Status": "OK", "Data": {"Command": 1}}`  
+  - `command` : 1 -> show Welcome message on OLED (access valid) + welcome sound on beeper,  2-> show warning message (access invalid) + warning sound , 3 -> show unauthorized access message + Annoying sound , 4 -> Show `[name] playing`, no sound   
+  - `name` : optional parmeter for command 4 only   
+Example: `{"Status": "OK", "Data": {"command": 1}}`  
 
 ## Frontend (Web) (Grafana)  
 Access Endpoint : `http://34.150.76.100:3000`   
@@ -116,3 +116,4 @@ Required user interactions:
 ## Things not done (include in part 2 of the report)
 1. Authorization / Transfer of ownership
 2. Automatically link the humidity tube
+3. Automatically schedule tuning service
