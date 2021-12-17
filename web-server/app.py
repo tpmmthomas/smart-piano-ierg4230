@@ -112,7 +112,7 @@ def threaded_control():
             fmean,fsd = None,None
         else:
             fmean,fsd = z[0]['mean'],z[0]['stddev']
-        if fmean is not None and fsd is not None and fmean > 150 and fsd > 100:
+        if fmean is not None and fsd is not None and fmean > 200 and fsd > 100:
             #is_playing
             in_use = db.query_db('Select * from InuseFlag')[0]['control']
             if in_use == 0:
@@ -147,12 +147,13 @@ def threaded_control():
             accepted_deviation = (freqlist[tempindex+1]-freqlist[tempindex])/4
             if abs(tunemean-freqlist[correctindex]) > accepted_deviation:
                 db.add_db("TuneReminders",{"note":notelist[correctindex],"detected_frequency":tunemean,"correct_frequency":freqlist[correctindex]})
+                msg = f"Tune Reminder: Detected Frequency {tunemean:.2f}Hz for note {notelist[correctindex]} while the correct frequency should be {freqlist[correctindex]}Hz. A tuning service will be scheduled for you."
+            else:
+                msg = f"The note {notelist[correctindex]}'s detected frequency is {truemean:.2f}Hz, which is within acceptable deviation with the true frequency {freqlist[correctindex]}Hz."
             allusers = db.query_db('Select "chat_id" from Usertb')
-            msg = f"Tune Reminder: Detected Frequency {tunemean:.2f}Hz for note {notelist[correctindex]} while the correct frequency should be {freqlist[correctindex]}Hz. A tuning service will be scheduled for you."
             for userx in allusers:
                 chat_id = userx['chat_id']
                 bot.sendMessage(chat_id,msg)
-
         # Revoke access since time has passed
         x = db.query_db('Select * from AccessFlag where time < now()-30m  and "control" = 1')
         if len(x) > 0:
