@@ -1,8 +1,6 @@
 /**
    BasicHTTPClient.ino
-
     Created on: 24.05.2015
-
 */
 
 #include <Arduino.h>
@@ -22,7 +20,6 @@ ESP8266WiFiMulti WiFiMulti;
 // Temperature & Humidity
 #include <Wire.h>
 #include "Thinary_AHT10.h"
-
 AHT10Class AHT10;
 
 float Humidity;
@@ -92,16 +89,16 @@ void setup() {
 }
 
 void loop() {
-  
+
   if (osEvent::osTimer != millis()) timeStampUpdate();
   if (th_event.isSet()) th_event_handler();
 //  if (mic_event.isSet()) mic_event_handler();
 //  if (fft_event.isSet()) fft_event_handler();
 //  if (wifi_event.isSet()) wifi_event_handler();
-  
+
   if (test_event.isSet()) test_event_handler();
-  
-  
+
+
 
 //  delay(10000);
 }
@@ -126,11 +123,11 @@ void timeStampUpdate(void)   // no need to modify this function unless you know 
 // Event Handlers
 void th_event_handler(void){
   th_event.clean();
-  
+
   // get the temperature & humidity
   Temperature = AHT10.GetTemperature();
   Humidity = AHT10.GetHumidity();
-  
+
   Serial.println(String("") + "Temperature(℃):\t" + Temperature + "℃");
   Serial.println(String("") + "Humidity(%RH):\t\t" + Humidity + "%");
   Serial.println();
@@ -147,10 +144,10 @@ void th_event_handler(void){
 
     Serial.print("[HTTP] begin...\n");
     if (http.begin(client, "http://34.150.76.100:9876")) {  // HTTP
-      
+
       Serial.print("[HTTP] GET...\n");
       // start connection and send HTTP header
-//      int httpCode = http.GET();
+      int httpCode = http.GET();
 //      int httpCode = http.POST("temp="+to_string(Temperature)+"?humid="+to_string(Humidity));
 //      int httpCode = http.POST("123");
 
@@ -227,7 +224,7 @@ void wifi_event_handler(void){
 
     Serial.print("[HTTP] begin...\n");
     if (http.begin(client, "http://jigsaw.w3.org/HTTP/connection.html")) {  // HTTP
-      
+
       Serial.print("[HTTP] GET...\n");
       // start connection and send HTTP header
       int httpCode = http.GET();
