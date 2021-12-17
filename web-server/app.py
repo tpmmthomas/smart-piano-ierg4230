@@ -107,12 +107,12 @@ def threaded_control():
         if len(y) == 0:
             db.del_dball("ReminderLog")
         #Check if being accessed
-        z = db.query_db('Select mean("frequency"),stddev("frequency") from Frequency where time > now()-10s')
-        if len(z) == 0:
-            fmean,fsd = None,None
-        else:
-            fmean,fsd = z[0]['mean'],z[0]['stddev']
-        if fmean is not None and fsd is not None and fmean > 200 and fsd > 100:
+        z = db.query_db('Select frequency from Frequency where time > now()-10s')
+        count = 0
+        for records in z:
+            if records['frequency'] < 200:
+                count += 1
+        if count/len(z) > 0.2:
             #is_playing
             in_use = db.query_db('Select * from InuseFlag')[0]['control']
             if in_use == 0:
