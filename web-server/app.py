@@ -107,7 +107,7 @@ def threaded_control():
         if len(y) == 0:
             db.del_dball("ReminderLog")
         #Check if being accessed
-        z = db.query_db('Select mean("frequency"),stddev("frequency") from Frequency where time > now()-30s')
+        z = db.query_db('Select mean("frequency"),stddev("frequency") from Frequency where time > now()-10s')
         if len(z) == 0:
             fmean,fsd = None,None
         else:
@@ -133,7 +133,7 @@ def threaded_control():
                 db.add_db("InuseFlag",{"control":0})
                 db.add_db("UseRecord",{"start_use":0})
         # Check if tuning mode is opened.
-        r = db.query_db('Select mean("frequency"),stddev("frequency") from Frequency where time > now()-5s')
+        r = db.query_db('Select mean("frequency"),stddev("frequency") from Frequency where time > now()-3s')
         if len(r) == 0:
             tunemean,tunesd = None,None
         else:
