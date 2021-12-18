@@ -62,7 +62,6 @@ arduinoFFT FFT = arduinoFFT();
 volatile uint32_t samplei = 0;
 const uint16_t samples = 512;
 const double samplingFrequency = 8000;
-volatile double sReal[samples];
 double vReal[samples];
 double vImag[samples];
 volatile int readflag=1;
@@ -116,14 +115,11 @@ void setup()
 void loop()
 {
   if(readflag){
-    sReal[samplei++] = (double)analogRead(A0);
+    vImag[samplei] = 0.0;
+    vReal[samplei++] = (double)analogRead(A0);
     readflag = 0;
   }
   if(samplei >= samples){
-    for(int i=0;i<samples;i++){
-      vReal[i] = sReal[i];
-      vImag[i]=0.0;
-    }
     FFT.Windowing(vReal,samples,FFT_WIN_TYP_HAMMING,FFT_FORWARD);
     FFT.Compute(vReal, vImag, samples, FFT_FORWARD);
     FFT.ComplexToMagnitude(vReal, vImag, samples);
@@ -133,7 +129,6 @@ void loop()
     delay(100);
     Humidity = AHT10.GetHumidity();
     Serial.println(String("") + "Humidity(%RH):\t" + Humidity + "%");
-    samplei = 0;
     if ((WiFi.status() == WL_CONNECTED)) {
       WiFiClient client;
       HTTPClient http;
@@ -159,7 +154,27 @@ void loop()
       } else {
         Serial.printf("[HTTP} Unable to connect\n");
       }
+      url = "http://"+SERVER_IP+"/audio?frequency="+String(x,2);
+      if(http.begin(client, url)){
+        int httpCode = http.GET();
+        if (httpCode > 0) {
+          // HTTP header has been send and Server response header has been handled
+          Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+  
+          // file found at server
+          if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+            String payload = http.getString();
+            Serial.println(payload);
+          }
+        } else {
+          Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+        }
+        http.end();
+      } else {
+        Serial.printf("[HTTP} Unable to connect\n");
+      }
     }
+    samplei = 0;
     delay(100);
   }
 }
