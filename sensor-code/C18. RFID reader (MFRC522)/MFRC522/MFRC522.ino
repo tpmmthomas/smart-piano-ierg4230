@@ -42,6 +42,18 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 //MFRC522 mfrc522(0x3F, RST_PIN);   // Create MFRC522 instance.
 MFRC522 mfrc522(0x28, RST_PIN);   // Create MFRC522 instance.
 
+void bytearray_to_string(byte array[], unsigned int len, char buffer[])
+{
+    for (unsigned int i = 0; i < len; i++)
+    {
+        byte nib1 = (array[i] >> 4) & 0x0F;
+        byte nib2 = (array[i] >> 0) & 0x0F;
+        buffer[i*2+0] = nib1  < 0xA ? '0' + nib1  : 'A' + nib1  - 0xA;
+        buffer[i*2+1] = nib2  < 0xA ? '0' + nib2  : 'A' + nib2  - 0xA;
+    }
+    buffer[len*2] = '\0';
+}
+
 void setup() {
   ESP.wdtDisable();
   ESP.wdtFeed();
@@ -98,7 +110,7 @@ void loop() {
   display.print("Card UID Length: ");
   display.println(mfrc522.uid.size, HEX);
   display.display();
-
+  
   Serial.print(F("Card UID:"));
   //OLED 5rd line
   display.setCursor(0, 50);
@@ -123,6 +135,10 @@ void loop() {
     display.print(mfrc522.uid.uidByte[i], HEX);
     display.display();
   }
+  char str[32] = "";
+  bytearray_to_string(mfrc522.uid.uidByte,4,str);
+  Serial.print("card uid in string: ");
+  Serial.println(str);
   Serial.println();
   ESP.wdtFeed();
 }
