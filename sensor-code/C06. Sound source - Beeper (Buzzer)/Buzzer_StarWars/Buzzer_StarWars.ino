@@ -18,7 +18,7 @@
 */
 #include "Buzzer.h"
 
-Buzzer buzzer(14, 16); // (Buzzer pin,LED pin)
+Buzzer buzzer(13, 16); // (Buzzer pin,LED pin)
 
 void setup()
 {
