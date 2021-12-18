@@ -46,6 +46,7 @@ def tune(update: Update, context: CallbackContext):
         update.message.reply_text("You are not a registered user.")
         return
     db.add_db("Tuning",{"dummy":1})
+    db.del_dball("TuneReminders")
     update.message.reply_text("Tuning record added!")
 
 
