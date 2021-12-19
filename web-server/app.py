@@ -15,6 +15,8 @@ logging.basicConfig(
 # bot = telegram.Bot(token=TOKEN)
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
+global last_access_time
+global access_user
 
 def printf(s):
     s = str(s)
@@ -28,7 +30,8 @@ def telegram_announcement(msg):
         chat_id = userx['chat_id']
         bot.sendMessage(chat_id,msg)
 
-print(notelist,freqlist)
+
+
 @app.route("/savehumidity", methods=["GET"])
 def savehumid():
     humid = request.args.get("humidity")
@@ -54,11 +57,9 @@ def saveaccess():
     accesscode = request.args.get("id")
     logger.info(str(accesscode))
     allowedlist = db.query_db("Select * from RegisteredAccess")
-    print(allowedlist)
     is_allowed = False
     uname = None
     for allowed in allowedlist:
-        print(allowed['code'],accesscode)
         if allowed['code'] == accesscode:
             is_allowed = True
             uname = allowed['name']
@@ -116,20 +117,21 @@ def threaded_control():
         if len(y) == 0:
             db.del_dball("ReminderLog")
         #Check if being accessed
-        z = db.query_db('Select frequency from Frequency where time > now()-5s')
+        z = db.query_db('Select frequency from Frequency where time > now()-20s')
         count = 0
         for records in z:
             if records['frequency'] >= 200:
                 count += 1
         printf("count"+str(count)+" "+str(len(z)))
-        if count/len(z) > 0.5:
+        if len(z) >0 and count/len(z) > 0.5:
             #is_playing
             in_use = db.query_db('Select * from InuseFlag')[0]['control']
             printf("playing!")
+            db.add_db("UseRecord",{"playing":1})
             if in_use == 0:
+                last_access_time = time.time()
                 db.del_dball("InuseFlag")
                 db.add_db("InuseFlag",{"control":1})
-                db.add_db("UseRecord",{"start_use":1})
                 access_control = db.query_db('Select * from AccessFlag')[0]['control']
                 printf("access")
                 printf(access_control)
@@ -137,21 +139,24 @@ def threaded_control():
                     printf("hi2")
                     db.add_db("Command",{'command':3})
                     telegram_announcement("Someone is playing on the piano without proper access!")
+                    access_user = "unauthorized"
                 else:
                     printf("hihi")
                     cuser = db.query_db('Select uname from AccessRecord GROUP BY * ORDER BY DESC LIMIT 1')[0]['uname']
-                    print("user"+cuser)
+                    access_user = cuser
                     db.add_db("Command",{'command':4,'uname': cuser})
                     telegram_announcement(f"The piano is being used by {cuser} now.")
         else:
             #not_playing
             printf("goodlordhihi")
+            db.add_db("UseRecord",{"playing":0})
             in_use = db.query_db('Select * from InuseFlag')[0]['control']
             if in_use == 1:
                 telegram_announcement("The piano is now unoccupied.")
+                useduration = (time.time() - last_access_time)/60
+                db.add_db("UseDuration",{"piano_user":access_user,"duration":useduration})
                 db.del_dball("InuseFlag")
                 db.add_db("InuseFlag",{"control":0})
-                db.add_db("UseRecord",{"start_use":0})
                 db.add_db("Command",{'command':5})
         # Check if tuning mode is opened.
         r = db.query_db('Select mean("frequency"),stddev("frequency") from Frequency where time > now()-3s')
@@ -161,7 +166,7 @@ def threaded_control():
             tunemean,tunesd = r[0]['mean'],r[0]['stddev']
         printf("Tunemean "+str(tunemean))
         printf("Tunesd "+str(tunesd))
-        if tunemean is not None and tunesd is not None and tunemean >= freqlist[0] and tunemean < freqlist[-1] and tunesd < 50:
+        if tunemean is not None and tunesd is not None and tunemean >= freqlist[0] and tunemean < freqlist[-1] and tunesd < 20:
             printf("tuninghere")
             for i in range(len(freqlist)-1):
                 if freqlist[i]<= tunemean and tunemean < freqlist[i+1]:
@@ -171,12 +176,14 @@ def threaded_control():
             correctindex = tempindex if abs(tunemean-freqlist[tempindex]) < abs(tunemean-freqlist[tempindex+1]) else tempindex + 1
             accepted_deviation = (freqlist[tempindex+1]-freqlist[tempindex])/4
             printf(correctindex)
-            if abs(tunemean-freqlist[correctindex]) > accepted_deviation:
+            dev = abs(tunemean-freqlist[correctindex])
+            if  dev > accepted_deviation:
                 db.add_db("TuneReminders",{"note":notelist[correctindex],"detected_frequency":tunemean,"correct_frequency":freqlist[correctindex]})
                 msg = f"Tune Reminder: Detected Frequency {tunemean:.2f}Hz for note {notelist[correctindex]} while the correct frequency should be {freqlist[correctindex]}Hz. A tuning service will be scheduled for you."
             else:
                 msg = f"The note {notelist[correctindex]}'s detected frequency is {tunemean:.2f}Hz, which is within acceptable deviation with the true frequency {freqlist[correctindex]}Hz."
             telegram_announcement(msg)
+            db.add_db("Frequency",{"deviation": dev})
         # Revoke access since time has passed
         x = db.query_db('Select * from AccessFlag where time < now()-30m  and "control" = 1')
         if len(x) > 0:
@@ -194,13 +201,14 @@ def unsafe_reset_all():
     db.del_dball("InuseFlag")
     db.del_dball("Frequency")
     db.del_dball("UseRecord")
+    db.del_dball("UseDuration")
     db.del_dball("Tuning")
     db.del_dball("TuneReminders")
     db.add_db("InuseFlag",{"control":0})
     db.add_db("AccessFlag",{"control":0})
 
 if __name__ == "__main__":
-    unsafe_reset_all() #comment if needed
+    # unsafe_reset_all() #comment if needed
     thread = threading.Thread(target=threaded_control)
     thread.start()
     app.run(host='0.0.0.0',port=9876,threaded=True)
