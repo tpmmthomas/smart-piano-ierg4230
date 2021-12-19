@@ -8,7 +8,7 @@
 #include <Adafruit_SSD1306.h>
 #include <splash.h>
 
-#include <Adafruit_MonoOLED.h>
+//#include <Adafruit_MonoOLED.h>
 #include <gfxfont.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SPITFT.h>
@@ -21,15 +21,13 @@
 #define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-#define RST_PIN 14 // GPIO-14(D5) Pin on ESP8266
-
 // Beeper
 #include "Buzzer.h"
-Buzzer buzzer(15); // (Buzzer pin)
+Buzzer buzzer(14); // (Buzzer pin)
 
 //RFID
 #include "MFRC522_I2C.h"
-#define RST_PIN 14 // GPIO-14(D5) Pin on ESP8266
+#define RST_PIN 5 // GPIO-14(D5) Pin on ESP8266
 MFRC522 mfrc522(0x28, RST_PIN);   // Create MFRC522 instance.
 
 //WiFi
@@ -44,9 +42,15 @@ String SERVER_IP="34.150.76.100:9876";
 #endif
 
 // TimerInterrupt
-#include "ESP8266TimerInterrupt.h"
-#define TIMER_INTERVAL_MS 1000
-ESP8266Timer ITimer;
+//#include "ESP8266TimerInterrupt.h"
+//#include "ESP8266_ISR_Timer.h"
+//#define TIMER_INTERVAL_MS 1000
+//ESP8266Timer ITimer;
+
+//use millis instead
+const long interval = 1000;
+unsigned long previousMillis = 0;
+
 
 // JSON
 #include "ArduinoJson.h"
@@ -54,16 +58,20 @@ ESP8266Timer ITimer;
 
 volatile int readflag=1;
 volatile int readcard = 0;
-void IRAM_ATTR TimerHandler()
-{
-  Serial.print("Readflag2:");
-  Serial.println(readflag);
-  Serial.print("Readcard2:");
-  Serial.println(readcard);
-  readflag=1;
-  if(readcard>0) readcard--;
-//Serial.println("hi!");
-}
+//void TimerHandler()
+//{
+////  Serial.print("Readflag2:");
+////  Serial.println(readflag);
+////  Serial.print("Readcard2:");
+////  Serial.println(readcard);
+//  readflag=1;
+//  if(readcard>0){
+//    readcard--;
+//    buzzer.sound(NOTE_C3,250);
+//    buzzer.sound(NOTE_C3,250);
+//    buzzer.sound(NOTE_C3,250);
+//  }
+//}
 
 
 void bytearray_to_string(byte array[], unsigned int len, char buffer[])
@@ -115,20 +123,24 @@ void setup() {
   Serial.print("Connected! IP address: ");
   Serial.println(WiFi.localIP());
 
-  if (ITimer.attachInterruptInterval(TIMER_INTERVAL_MS*1000, TimerHandler))
-  {
-    Serial.println(("Starting  ITimer OK"));
-  }
-  else
-    Serial.println(("Can't set ITimer correctly. Select another freq. or interval"));
-    
+//  if (ITimer.attachInterruptInterval(TIMER_INTERVAL_MS*1000, TimerHandler))
+//  {
+//    Serial.println(("Starting  ITimer OK"));
+//  }
+//  else
+//    Serial.println(("Can't set ITimer correctly. Select another freq. or interval"));
+
 }
 
 void loop() {
-  Serial.print("Readflag:");
-  Serial.println(readflag);
-  Serial.print("Readcard:");
-  Serial.println(readcard);
+  unsigned long currentMillis = millis();
+  if(currentMillis - previousMillis >= interval){
+    previousMillis = currentMillis;
+    readflag = 1;
+    if(readcard>0) readcard--;
+    display.clearDisplay();
+    display.display();
+  }
   if (readflag) {
     if ((WiFi.status() == WL_CONNECTED)) {
       WiFiClient client;
@@ -178,7 +190,7 @@ void loop() {
                     message = "You don't have the access right, leave immediately!";
                   }
                   else if (command == 4){
-                    String uname = doc["Data"]["name"];
+                    String uname = doc["Data"]["uname"];
                     message = uname + " is playing.";
                   }
                   display.setCursor(0, 20);
@@ -217,7 +229,6 @@ void loop() {
     }
     readflag=0;
   }
-  Serial.println("check a");
   // RFID
   // Look for new cards, and select one if present
   if(readcard>0) return;
@@ -226,7 +237,6 @@ void loop() {
     delay(200);
     return;
   }
-  Serial.println("check b");
   char str[32] = "";
   bytearray_to_string(mfrc522.uid.uidByte,4,str);
   Serial.print("card uid in string: ");
@@ -235,13 +245,13 @@ void loop() {
   if ((WiFi.status() == WL_CONNECTED)) {
       WiFiClient client;
       HTTPClient http;
-  
+      http.addHeader("Content-Type", "text/plain");
       Serial.print("[HTTP] begin...\n");
       // configure traged server and url
-      String url = "http://"+SERVER_IP+"/access";
+      String url = "http://"+SERVER_IP+"/access?id="+String(str);
       if(http.begin(client, url)){
-        String params = "{\"id\":\""+String(str)+"\"}";
-        int httpCode = http.POST(params);
+//        String params = "id="+String(str);//"{\"id\":\""+String(str)+"\"}";
+        int httpCode = http.GET();
         if (httpCode > 0) {
           // HTTP header has been send and Server response header has been handled
           Serial.printf("[HTTP] POST... code: %d\n", httpCode);
