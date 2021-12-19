@@ -8,6 +8,7 @@ import threading
 import time
 from tgbot import bot
 from frequencies import notelist,freqlist
+import threading
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
@@ -15,8 +16,11 @@ logging.basicConfig(
 # bot = telegram.Bot(token=TOKEN)
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
-global last_access_time
 global access_user
+global is_cancelled
+last_access_time = time.time()
+is_cancelled = False
+begin = True
 
 def printf(s):
     s = str(s)
@@ -29,6 +33,16 @@ def telegram_announcement(msg):
     for userx in allusers:
         chat_id = userx['chat_id']
         bot.sendMessage(chat_id,msg)
+
+# def delayed_announcement(msg,flag,cuser):
+#     time.sleep(5)
+#     logger.info("HIHIHIHI")
+#     if not is_cancelled:
+#         telegram_announcement(msg)
+#         if flag == 1:
+#             db.add_db("Command",{'command':3})
+#         else:
+#             db.add_db("Command",{'command':4,'uname': cuser})
 
 
 
@@ -110,6 +124,9 @@ def index():
     return jsonify({"message": "Hello,hello, World!"})
 
 def threaded_control():
+    global last_access_time
+    global begin
+    access_user = "placeholder"
     while True:
         time.sleep(5)
         #Clear Reminder Log to allow new reminders
@@ -118,12 +135,17 @@ def threaded_control():
             db.del_dball("ReminderLog")
         #Check if being accessed
         z = db.query_db('Select frequency from Frequency where time > now()-20s')
+        r = db.query_db('Select stddev("frequency") from Frequency where time > now()-10s')
+        try:
+            r = r[0]['stddev']
+        except:
+            r = 0
         count = 0
         for records in z:
             if records['frequency'] >= 200:
                 count += 1
         printf("count"+str(count)+" "+str(len(z)))
-        if len(z) >0 and count/len(z) > 0.5:
+        if (len(z) >0 and count/len(z) > 0.6) or r > 400:
             #is_playing
             in_use = db.query_db('Select * from InuseFlag')[0]['control']
             printf("playing!")
@@ -137,27 +159,38 @@ def threaded_control():
                 printf(access_control)
                 if access_control == 0:
                     printf("hi2")
+                    is_cancelled = False
+                    msg = "Someone is playing on the piano without proper access!"
+                    telegram_announcement(msg)
                     db.add_db("Command",{'command':3})
-                    telegram_announcement("Someone is playing on the piano without proper access!")
+                    # threading.Thread(target=delayed_announcement,args=(msg,1,"asd")).start()
                     access_user = "unauthorized"
                 else:
                     printf("hihi")
                     cuser = db.query_db('Select uname from AccessRecord GROUP BY * ORDER BY DESC LIMIT 1')[0]['uname']
                     access_user = cuser
+                    is_cancelled = False
+                    msg = f"The piano is being used by {cuser} now."
+                    telegram_announcement(msg)
                     db.add_db("Command",{'command':4,'uname': cuser})
-                    telegram_announcement(f"The piano is being used by {cuser} now.")
+                    # threading.Thread(target=delayed_announcement,args=(msg,2,cuser)).start()
         else:
             #not_playing
             printf("goodlordhihi")
             db.add_db("UseRecord",{"playing":0})
             in_use = db.query_db('Select * from InuseFlag')[0]['control']
             if in_use == 1:
-                telegram_announcement("The piano is now unoccupied.")
-                useduration = (time.time() - last_access_time)/60
-                db.add_db("UseDuration",{"piano_user":access_user,"duration":useduration})
-                db.del_dball("InuseFlag")
-                db.add_db("InuseFlag",{"control":0})
-                db.add_db("Command",{'command':5})
+                if begin:
+                    db.del_dball("InuseFlag")
+                    db.add_db("InuseFlag",{"control":0})
+                else:
+                    is_cancelled = True
+                    useduration = (time.time() - last_access_time)/60
+                    telegram_announcement("The piano is now unoccupied.")
+                    db.add_db("UseDuration",{"piano_user":access_user,"duration":useduration})
+                    db.del_dball("InuseFlag")
+                    db.add_db("InuseFlag",{"control":0})
+                    db.add_db("Command",{'command':5})
         # Check if tuning mode is opened.
         r = db.query_db('Select mean("frequency"),stddev("frequency") from Frequency where time > now()-3s')
         if len(r) == 0:
@@ -189,6 +222,7 @@ def threaded_control():
         if len(x) > 0:
             db.del_dball("AccessFlag")
             db.add_db("AccessFlag",{"control":0})
+        begin = False
 
 def unsafe_reset_all():
     db.del_dball("Humidity")
