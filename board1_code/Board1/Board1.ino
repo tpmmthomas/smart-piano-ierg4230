@@ -58,6 +58,7 @@ unsigned long previousMillis = 0;
 
 volatile int readflag=1;
 volatile int readcard = 0;
+bool cleardisplay = true;
 //void TimerHandler()
 //{
 ////  Serial.print("Readflag2:");
@@ -138,8 +139,10 @@ void loop() {
     previousMillis = currentMillis;
     readflag = 1;
     if(readcard>0) readcard--;
-    display.clearDisplay();
-    display.display();
+    if(cleardisplay){
+      display.clearDisplay();
+      display.display();
+    }
   }
   if (readflag) {
     if ((WiFi.status() == WL_CONNECTED)) {
@@ -192,6 +195,10 @@ void loop() {
                   else if (command == 4){
                     String uname = doc["Data"]["uname"];
                     message = uname + " is playing.";
+                    cleardisplay = false;
+                  }
+                  else if (command == 5){
+                    cleardisplay = true; 
                   }
                   display.setCursor(0, 20);
                   // Display static text
