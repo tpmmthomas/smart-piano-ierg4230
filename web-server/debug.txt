@@ -1,0 +1,1211 @@
+count2count3count1count2count3count4count4count1count1count3 9
+count4 18
+count3 17
+count6 17
+count8 17
+count5 17
+count2 16
+count4 17
+count7 18
+count6 17
+count2 17
+count4 16
+count9 16
+hihi
+count7 17
+count3 17
+count4 18
+count3 18
+count3 17
+count2 17
+count0 17
+count0 17
+count0 17
+count0 17
+count1 16
+count2 15
+count2 17
+count1 17
+count1 17
+count2 18
+count6 17
+count6 16
+count3 17
+count2 17
+count2 17
+count2 18
+count2 17
+count2 17
+count2 17
+count3 17
+count4 18
+count4 17
+count2 17
+count3 17
+count5 16
+count3 17
+count2 17
+count5 17
+count6 18
+count3 17
+count0 16
+count0 17
+count2 17
+count5 17
+count7 17
+hihi
+count7 17
+count6 17
+count5 17
+count2 18
+count2 17
+count2 17
+count0 17
+count2 17
+count5 17
+count4 17
+count2 17
+count6 17
+count5 17
+count3 16
+count8 16
+hihi
+count6 17
+count2 18
+count4 17
+count5 17
+count3 18
+count3 17
+count5 16
+count6 17
+count4 18
+count2 17
+count3 17
+count5 17
+count4 16
+count7 17
+hihi
+count8 17
+count3 8
+count9 17
+hi2
+count9 18
+count10 17
+count8 16
+count4 17
+count7 17
+hihi
+count9 17
+count7 17
+count4 18
+count3 17
+count2 15
+count2 15
+count5 17
+count8 17
+hihi
+count7 17
+count5 17
+count4 16
+count6 17
+count5 17
+count2 17
+count3 17
+count3 17
+count1 17
+count1 18
+count1 17
+count1 16
+count2 17
+count1 17
+count1 17
+count2 18
+count1 17
+count0 17
+count2 17
+count4 17
+count3 17
+count3 17
+count4 17
+count3 18
+count2 17
+count4 16
+count6 17
+count6 17
+count8 17
+hihi
+count7 18
+count4 16
+count4 15
+count3 16
+count3 17
+count3 16
+count3 16
+count6 17
+count6 16
+count3 16
+count3 17
+count2 17
+count1 17
+count1 17
+count1 17
+count2 17
+count2 17
+count2 17
+count3 16
+count4 16
+count3 16
+count1 16
+count1 18
+count4 17
+count3 15
+count0 13
+count0 14
+count0 16
+count2 16
+count0 8
+count1 17
+count1 17
+count0 16
+count0 16
+count2 17
+count6 17
+count5 16
+count4 17
+count1 8
+count1 17
+count1 17
+count2 17
+count3 17
+count2 17
+count0 16
+count2 16
+count11 17
+hi2
+count15 15
+count15 15
+count12 14
+count13 15
+count16 16
+count15 16
+count15 16
+count16 16
+count14 16
+count13 16
+count13 16
+count14 16
+count14 16
+count11 16
+count13 16
+count13 13
+count7 13
+count2 15
+count2 13
+count3 13
+count3 16
+count2 17
+count2 18
+count2 17
+count1 16
+count1 17
+count1 18
+count2 9
+goodlordhihi
+count2 17
+goodlordhihi
+count0 17
+goodlordhihi
+count2 17
+goodlordhihi
+count9 16
+access
+0
+hi2
+count14 17
+count12 16
+count15 17
+count17 17
+count16 17
+count13 17
+count8 16
+count7 17
+count6 17
+goodlordhihi
+count3 17
+goodlordhihi
+count1 17
+goodlordhihi
+count2 17
+goodlordhihi
+count2 18
+goodlordhihi
+count4 17
+goodlordhihi
+count11 16
+access
+1
+hihi
+count15 16
+count16 17
+count15 17
+count9 16
+count7 17
+count7 16
+count5 16
+goodlordhihi
+count4 17
+goodlordhihi
+count1 17
+goodlordhihi
+count4 18
+goodlordhihi
+count11 17
+access
+1
+hihi
+count8 12
+count5 11
+count10 16
+count12 16
+count14 16
+count15 16
+count14 14
+count11 14
+count13 16
+count14 16
+count11 15
+count1 8
+goodlordhihi
+Tunemean 194.68599999999998
+Tunesd 74.19887283510445
+count4 17
+goodlordhihi
+Tunemean 222.608
+Tunesd 211.79457729129894
+count3 17
+goodlordhihi
+Tunemean 79.852
+Tunesd 23.16437178081892
+count1 17
+goodlordhihi
+Tunemean 137.48333333333335
+Tunesd 108.25246651539479
+count1 17
+goodlordhihi
+Tunemean 67.602
+Tunesd 19.50260931260225
+count0 17
+goodlordhihi
+Tunemean 95.98
+Tunesd 54.93228149276161
+count3 17
+goodlordhihi
+Tunemean 217.92400000000004
+Tunesd 213.04005252534088
+count4 17
+goodlordhihi
+Tunemean 495.904
+Tunesd 962.0309634466034
+count9 17
+goodlordhihi
+Tunemean 1681.9720000000002
+Tunesd 1324.422328118943
+count16 17
+playing!
+access
+0
+hi2
+Tunemean 923.392
+Tunesd 786.7617752026339
+count13 17
+playing!
+Tunemean 369.45199999999994
+Tunesd 428.0110571235281
+count11 17
+playing!
+Tunemean 3122.2560000000003
+Tunesd 1723.0787484122716
+count12 17
+playing!
+Tunemean 1864.2780000000002
+Tunesd 1920.1591564945861
+count11 17
+playing!
+Tunemean 1029.9479999999999
+Tunesd 1658.477937347977
+count11 16
+playing!
+Tunemean 358.90999999999997
+Tunesd 324.86557850901966
+count8 16
+goodlordhihi
+Tunemean 119.70166666666667
+Tunesd 71.9086229646116
+count6 17
+goodlordhihi
+Tunemean 143.352
+Tunesd 55.81871343913258
+count5 17
+goodlordhihi
+Tunemean 154.875
+Tunesd 73.51806274651149
+count6 17
+goodlordhihi
+Tunemean 187.79000000000002
+Tunesd 83.19007002040568
+count9 17
+goodlordhihi
+Tunemean 279.61199999999997
+Tunesd 179.07482394239565
+count9 17
+goodlordhihi
+Tunemean 280.33000000000004
+Tunesd 165.82757566219195
+count8 17
+goodlordhihi
+Tunemean 237.2933333333333
+Tunesd 95.75104378891473
+count8 16
+goodlordhihi
+Tunemean 370.01
+Tunesd 398.38058279740494
+count13 16
+playing!
+access
+0
+hi2
+Tunemean 261.53
+Tunesd 26.818232603958073
+count17 17
+playing!
+Tunemean 333.40600000000006
+Tunesd 79.04521193595474
+count16 17
+playing!
+Tunemean 2184.9080000000004
+Tunesd 1704.513360557787
+count14 16
+playing!
+Tunemean 3077.216
+Tunesd 1693.269725037922
+count11 16
+playing!
+Tunemean 1451.63
+Tunesd 1609.0706315344478
+count8 17
+goodlordhihi
+Tunemean 368.558
+Tunesd 424.47604634419594
+count9 16
+goodlordhihi
+Tunemean 920.5120000000001
+Tunesd 951.1283509705723
+count7 17
+goodlordhihi
+Tunemean 93.19166666666668
+Tunesd 23.27056803489478
+count5 17
+goodlordhihi
+Tunemean 1462.212
+Tunesd 1631.7098990231077
+count5 16
+goodlordhihi
+Tunemean 906.6360000000001
+Tunesd 1697.3422624591658
+count10 17
+goodlordhihi
+Tunemean 896.1850000000001
+Tunesd 1292.7481766337944
+count16 17
+playing!
+access
+1
+hihi
+Tunemean 1066.6619999999998
+Tunesd 827.8148947198281
+count16 16
+playing!
+Tunemean 369.7075
+Tunesd 108.67535303983756
+count16 17
+playing!
+Tunemean 611.4300000000001
+Tunesd 657.6479563946048
+count16 17
+playing!
+Tunemean 825.35
+Tunesd 676.7588536916234
+count16 16
+playing!
+Tunemean 1011.7520000000001
+Tunesd 886.2101355039898
+count15 15
+playing!
+Tunemean 1507.96
+Tunesd 489.0336563059847
+count10 15
+playing!
+Tunemean 688.6475
+Tunesd 1104.7165872559049
+count11 17
+playing!
+Tunemean 1306.4360000000001
+Tunesd 710.3792260335321
+count13 15
+playing!
+Tunemean 623.7166666666667
+Tunesd 347.84685226883016
+count13 14
+playing!
+Tunemean 951.2860000000001
+Tunesd 871.3838271565521
+count16 16
+playing!
+Tunemean 801.904
+Tunesd 798.2660408535489
+count12 16
+playing!
+Tunemean 290.518
+Tunesd 493.5107349085732
+count7 16
+goodlordhihi
+Tunemean 1010.3799999999999
+Tunesd 1697.7303873848757
+count10 16
+playing!
+access
+0
+hi2
+Tunemean 1381.7750000000003
+Tunesd 1294.953970915569
+count15 17
+playing!
+Tunemean 943.1719999999999
+Tunesd 1494.2776547281967
+count13 16
+playing!
+Tunemean 2590.162
+Tunesd 1872.8818771668439
+count12 16
+playing!
+Tunemean 1874.6175
+Tunesd 1462.2811806529094
+count9 16
+goodlordhihi
+Tunemean 105.54249999999999
+Tunesd 58.77261685229497
+count5 16
+goodlordhihi
+Tunemean 155.744
+Tunesd 127.80468978093097
+count2 17
+goodlordhihi
+Tunemean 59.110000000000014
+Tunesd 78.37361035450645
+count0 18
+goodlordhihi
+Tunemean 75.90499999999999
+Tunesd 82.23768959546467
+count1 17
+goodlordhihi
+Tunemean 198.00999999999996
+Tunesd 273.81084912764135
+count1 17
+goodlordhihi
+Tunemean 60.956
+Tunesd 80.60449416750905
+count2 17
+goodlordhihi
+Tunemean 178.928
+Tunesd 395.3547069657828
+count3 16
+goodlordhihi
+Tunemean 656.435
+Tunesd 1211.3730871893542
+count3 17
+goodlordhihi
+Tunemean 75.924
+Tunesd 67.70459829287815
+count2 16
+goodlordhihi
+Tunemean 44.882000000000005
+Tunesd 63.65672250438284
+count2 17
+goodlordhihi
+Tunemean 406.7
+Tunesd 577.7476405404005
+count3 16
+goodlordhihi
+Tunemean 176.41250000000002
+Tunesd 141.52122888457407
+count2 17
+goodlordhihi
+Tunemean 180.296
+Tunesd 343.2379066041512
+count4 17
+goodlordhihi
+Tunemean 517.29
+Tunesd 807.2116312962789
+count4 16
+goodlordhihi
+Tunemean 112.67599999999997
+Tunesd 31.23940268315001
+count3 17
+goodlordhihi
+Tunemean 158.086
+Tunesd 67.69352871582335
+count5 16
+goodlordhihi
+Tunemean 187.73399999999998
+Tunesd 135.36823493715207
+count6 16
+goodlordhihi
+Tunemean 1051.355
+Tunesd 1961.404935014695
+count4 17
+goodlordhihi
+Tunemean 87.742
+Tunesd 47.78638896171168
+count2 18
+goodlordhihi
+Tunemean 450.34499999999997
+Tunesd 786.2334510500046
+count4 17
+goodlordhihi
+Tunemean 1217.502
+Tunesd 1542.736105032225
+count6 17
+goodlordhihi
+Tunemean 566.49
+Tunesd 632.4534719645391
+count6 17
+goodlordhihi
+Tunemean 159.706
+Tunesd 126.90102060267284
+count4 17
+goodlordhihi
+Tunemean 340.898
+Tunesd 590.8275426213643
+count1 16
+goodlordhihi
+Tunemean 112.64200000000001
+Tunesd 28.514373042379866
+count2 17
+goodlordhihi
+Tunemean 245.446
+Tunesd 155.1610994418382
+count4 17
+goodlordhihi
+Tunemean 125.756
+Tunesd 66.27164725582125
+count5 17
+goodlordhihi
+Tunemean 162.092
+Tunesd 56.61838676613808
+count6 18
+goodlordhihi
+Tunemean 161.025
+Tunesd 109.1796826795169
+count7 17
+goodlordhihi
+Tunemean 152.024
+Tunesd 83.46895938011927
+count2 5
+goodlordhihi
+Tunemean 223.46
+Tunesd 3.6203867196751265
+count2 13
+goodlordhihi
+Tunemean 75.95599999999999
+Tunesd 10.12973987820023
+count0 17
+goodlordhihi
+Tunemean 97.97799999999998
+Tunesd 17.065311892842743
+count1 17
+goodlordhihi
+Tunemean 89.664
+Tunesd 18.773716467444586
+count1 17
+goodlordhihi
+Tunemean 75.256
+Tunesd 23.553275356094318
+count0 17
+goodlordhihi
+Tunemean 79.40400000000001
+Tunesd 26.417900749302547
+count2 17
+goodlordhihi
+Tunemean 297.79
+Tunesd 543.7836343160761
+count4 16
+goodlordhihi
+Tunemean 130.3575
+Tunesd 54.83436658094386
+count2 17
+goodlordhihi
+Tunemean 91.91400000000002
+Tunesd 62.55813080647471
+count1 16
+goodlordhihi
+Tunemean 195.5125
+Tunesd 141.49676872046703
+count4 16
+goodlordhihi
+Tunemean 83.788
+Tunesd 17.39032115862154
+count4 18
+goodlordhihi
+Tunemean 478.334
+Tunesd 855.4541345273866
+count2 16
+goodlordhihi
+Tunemean 75.745
+Tunesd 10.201978566271674
+count2 15
+goodlordhihi
+Tunemean 100.92999999999999
+Tunesd 58.63181261056151
+count2 17
+goodlordhihi
+Tunemean 867.7140000000002
+Tunesd 1751.0540567698074
+count3 17
+goodlordhihi
+Tunemean 127.78200000000001
+Tunesd 92.1212878220881
+count4 17
+goodlordhihi
+Tunemean 347.48199999999997
+Tunesd 616.9327884543015
+count1 17
+goodlordhihi
+Tunemean 252.17399999999998
+Tunesd 383.3059779471226
+count2 18
+goodlordhihi
+Tunemean 110.54400000000001
+Tunesd 52.16789127423113
+count1 17
+goodlordhihi
+Tunemean 69.054
+Tunesd 8.97793851616283
+count4 8
+goodlordhihi
+Tunemean 219.006
+Tunesd 159.2167887818367
+count4 17
+goodlordhihi
+Tunemean 94.99600000000001
+Tunesd 23.54134936659324
+count1 17
+goodlordhihi
+Tunemean 101.904
+Tunesd 25.686117456711898
+count0 15
+goodlordhihi
+Tunemean 86.92333333333333
+Tunesd 32.21930704820739
+count2 15
+goodlordhihi
+Tunemean 352.196
+Tunesd 651.7099038145731
+count2 18
+goodlordhihi
+Tunemean 110.94399999999999
+Tunesd 52.78862405859808
+count2 8
+goodlordhihi
+Tunemean 871.8979999999999
+Tunesd 1747.7551883401748
+count4 16
+goodlordhihi
+Tunemean 154.64
+Tunesd 59.82559109611872
+count5 17
+goodlordhihi
+Tunemean 105.71199999999999
+Tunesd 66.50989678235864
+count4 17
+goodlordhihi
+Tunemean 133.352
+Tunesd 37.24152615025329
+count4 17
+goodlordhihi
+Tunemean 186.754
+Tunesd 85.66841734268236
+count4 17
+goodlordhihi
+Tunemean 123.27000000000001
+Tunesd 270.89963547409957
+count10 17
+goodlordhihi
+Tunemean 1200.516
+Tunesd 1054.5758696414402
+count14 16
+playing!
+access
+1
+hihi
+Tunemean 784.162
+Tunesd 693.4249095756512
+count15 17
+playing!
+Tunemean 866.394
+Tunesd 926.9454484650108
+count17 17
+playing!
+Tunemean 1149.136
+Tunesd 1021.2000768360723
+count15 16
+playing!
+Tunemean 1720.432
+Tunesd 1186.5570014415657
+count15 16
+playing!
+Tunemean 534.438
+Tunesd 579.3573932988169
+count17 17
+playing!
+Tunemean 762.4419999999999
+Tunesd 597.6108484373422
+count16 16
+playing!
+Tunemean 1457.096
+Tunesd 1645.9743543506381
+count16 16
+playing!
+Tunemean 673.934
+Tunesd 808.8457190836828
+count17 17
+playing!
+Tunemean 405.976
+Tunesd 230.2513433837032
+count17 17
+playing!
+Tunemean 527.712
+Tunesd 282.7289961606344
+count14 16
+playing!
+Tunemean 926.0039999999999
+Tunesd 944.6838153212957
+count2 9
+goodlordhihi
+Tunemean 2.1200000000000006
+Tunesd 0.0
+count2 17
+goodlordhihi
+Tunemean 2.12
+Tunesd 0.0
+count7 16
+goodlordhihi
+Tunemean 979.96
+Tunesd 690.0888366000424
+count14 16
+playing!
+access
+0
+hi2
+Tunemean 420.0559999999999
+Tunesd 157.65991732206382
+count16 17
+playing!
+Tunemean 1163.358
+Tunesd 701.4829818819555
+count15 17
+playing!
+Tunemean 908.234
+Tunesd 1020.5220320404651
+count13 16
+playing!
+Tunemean 1974.8419999999999
+Tunesd 1335.1880755983404
+count13 16
+playing!
+Tunemean 1013.6974999999999
+Tunesd 1109.4765109238078
+count11 17
+playing!
+Tunemean 660.888
+Tunesd 914.1797443719698
+count12 16
+playing!
+Tunemean 1425.8939999999998
+Tunesd 1511.1661067963375
+count15 17
+playing!
+Tunemean 2623.616
+Tunesd 1291.379125965725
+count11 17
+playing!
+Tunemean 818.1220000000001
+Tunesd 1051.2452120081214
+count8 16
+goodlordhihi
+Tunemean 2048.5020000000004
+Tunesd 924.9364768836831
+count13 17
+playing!
+access
+1
+hihi
+Tunemean 1149.398
+Tunesd 902.5762784219404
+count15 17
+playing!
+Tunemean 870.6199999999999
+Tunesd 853.3727397333478
+count14 16
+playing!
+Tunemean 457.102
+Tunesd 294.4441291145062
+count11 16
+playing!
+Tunemean 970.8683333333333
+Tunesd 1105.237980100515
+count11 17
+playing!
+Tunemean 1612.348
+Tunesd 1069.4528728606979
+count15 16
+playing!
+Tunemean 2041.9
+Tunesd 1268.9298578132677
+count17 17
+playing!
+Tunemean 441.188
+Tunesd 0.28190423906001205
+count17 17
+playing!
+Tunemean 441.27799999999996
+Tunesd 0.5380706273343678
+count16 16
+playing!
+Tunemean 440.47799999999995
+Tunesd 0.8432496664689574
+count16 17
+playing!
+Tunemean 2506.2920000000004
+Tunesd 696.9468785854486
+count15 17
+playing!
+Tunemean 2399.3740000000003
+Tunesd 1311.4472181639642
+count14 16
+playing!
+Tunemean 2524.834
+Tunesd 1432.0346857112086
+count13 16
+playing!
+Tunemean 1311.898
+Tunesd 1084.2933459493331
+count14 16
+playing!
+Tunemean 2536.5460000000003
+Tunesd 1001.7430053811207
+count15 16
+playing!
+Tunemean 1182.7900000000002
+Tunesd 1010.8956196611003
+count8 17
+goodlordhihi
+Tunemean 103.18199999999999
+Tunesd 41.523356319064575
+count1 18
+goodlordhihi
+Tunemean 105.98
+Tunesd 108.09702993144631
+count2 17
+goodlordhihi
+Tunemean 25.782000000000004
+Tunesd 52.90984048360002
+count2 17
+goodlordhihi
+Tunemean 2.12
+Tunesd 0.0
+count2 18
+goodlordhihi
+Tunemean 155.984
+Tunesd 282.64252321616436
+count1 17
+goodlordhihi
+Tunemean 2.12
+Tunesd 0.0
+count1 17
+goodlordhihi
+Tunemean 32.714000000000006
+Tunesd 68.41026370362857
+count0 9
+goodlordhihi
+Tunemean 2.12
+Tunesd 0.0
+count4 17
+goodlordhihi
+Tunemean 352.692
+Tunesd 195.97609221535163
+count12 16
+playing!
+access
+0
+hi2
+Tunemean 440.76599999999996
+Tunesd 1.305806264343981
+count16 16
+playing!
+Tunemean 440.34800000000007
+Tunesd 0.7279903845518781
+count16 17
+playing!
+Tunemean 2235.974
+Tunesd 1229.617694053725
+count14 17
+playing!
+Tunemean 2386.792
+Tunesd 1335.5088707380419
+count12 15
+playing!
+Tunemean 2673.805
+Tunesd 281.42485918387996
+count13 16
+playing!
+Tunemean 1520.9740000000002
+Tunesd 1414.6680170555917
+count11 16
+playing!
+Tunemean 1802.56
+Tunesd 1387.5980087186636
+count9 17
+goodlordhihi
+Tunemean 353.70400000000006
+Tunesd 628.138788230754
+count6 17
+goodlordhihi
+Tunemean 254.07799999999997
+Tunesd 425.22918934381727
+count2 17
+goodlordhihi
+Tunemean 83.83800000000001
+Tunesd 43.738289518452824
+count0 17
+goodlordhihi
+Tunemean 74.332
+Tunesd 18.545370581360732
+count0 16
+goodlordhihi
+Tunemean 83.29
+Tunesd 42.37379909802755
+count0 16
+goodlordhihi
+Tunemean 77.374
+Tunesd 15.44461168174843
+count0 17
+goodlordhihi
+Tunemean 76.352
+Tunesd 20.488712014179907
+count0 16
+goodlordhihi
+Tunemean 84.236
+Tunesd 29.858676795866227
+count3 8
+goodlordhihi
+Tunemean 453.608
+Tunesd 710.1487455948931
+count9 17
+goodlordhihi
+Tunemean 394.80600000000004
+Tunesd 65.52944857085248
+count14 17
+playing!
+access
+0
+hi2
+Tunemean 440.85200000000003
+Tunesd 1.1385604946598251
+count0 8
+goodlordhihi
+Tunemean 2.12
+Tunesd 0.0
+count3 17
+goodlordhihi
+Tunemean 187.93
+Tunesd 98.98127398654756
+count4 17
+goodlordhihi
+Tunemean 2.12
+Tunesd 0.0
+count9 16
+goodlordhihi
+Tunemean 440.396
+Tunesd 0.7685896174162127
+count0 8
+goodlordhihi
+Tunemean 29.610000000000003
+Tunesd 61.469508701469216
+count3 17
+goodlordhihi
+Tunemean 265.048
+Tunesd 240.020167006858
+count11 17
+playing!
+access
+0
+hi2
+Tunemean 441.32399999999996
+Tunesd 1.5196150828417152
+count1 9
+goodlordhihi
+Tunemean 104.00500000000001
+Tunesd 74.6611118990335
+count2 17
+goodlordhihi
+Tunemean 220.62599999999998
+Tunesd 291.94997384826047
+count8 16
+goodlordhihi
+Tunemean 440.322
+Tunesd 0.6878735348884923
+tuninghere
+count4 9
+goodlordhihi
+Tunemean 247.408
+Tunesd 148.1549699470119
+count12 17
+playing!
+access
+0
+hi2
+Tunemean 440.68199999999996
+Tunesd 1.4412043574732827
+tuninghere
+12
+count5 8
+playing!
+access
+0
+hi2
+Tunemean 458.352
+Tunesd 41.027713438601474
+tuninghere
+12
+13
+count13 16
+playing!
+Tunemean 1226.4560000000001
+Tunesd 1078.3605760736991
+count16 16
+playing!
+Tunemean 440.7
+Tunesd 0.7128347167003853
+tuninghere
+12
+12
+count16 16
+playing!
+Tunemean 440.36400000000003
+Tunesd 0.7356833557992044
+tuninghere
+12
+12
+count17 17
+playing!
+Tunemean 487.625
+Tunesd 0.700906555826086
+tuninghere
+13
+14
+count17 17
+playing!
+Tunemean 1001.9200000000001
+Tunesd 1149.9651382759391
+count14 17
+playing!
+Tunemean 1234.224
+Tunesd 1228.0229555794142
+count13 16
+playing!
+Tunemean 2811.722
+Tunesd 405.9198390938782
+count15 16
+playing!
+Tunemean 1892.2524999999998
+Tunesd 1270.0211797020027
+count13 17
+playing!
+Tunemean 1910.1533333333334
+Tunesd 1533.8513336130939
+count11 16
+playing!
+Tunemean 2076.078
+Tunesd 1129.4258793387019
+count11 16
+playing!
+Tunemean 1756.4800000000002
+Tunesd 1205.0060050057841
+count13 16
+playing!
+Tunemean 899.3750000000001
+Tunesd 2.339095266693249
+tuninghere
+24
+24
+count17 17
+playing!
+Tunemean 899.856
+Tunesd 3.196080412004684
+tuninghere
+24
+24
+count16 16
+playing!
+Tunemean 900.825
+Tunesd 5.5052369007457935
+tuninghere
+24
+24
+count16 16
+playing!
+Tunemean 902.686
+Tunesd 4.14647199435859
+tuninghere
+24
+24
+count16 17
+playing!
+Tunemean 1355.4879999999998
+Tunesd 1521.1377991063137
+count13 16
+playing!
+Tunemean 2258.27
+Tunesd 1544.819495556034
+count13 16
+playing!
+Tunemean 2911.358
+Tunesd 133.06153997305154
+count12 16
+playing!
+Tunemean 1308.8225
+Tunesd 1411.316626165676
+count14 16
+playing!
+Tunemean 1993.752
+Tunesd 990.8861472288327
+count16 17
+playing!
+Tunemean 2028.6299999999999
+Tunesd 1120.7282783975784
+count13 17
+playing!
+Tunemean 1636.806
+Tunesd 1294.1963674728809
+count7 17
+goodlordhihi
+Tunemean 178.96800000000002
+Tunesd 275.9095050374307
+count2 17
+goodlordhihi
+Tunemean 116.37800000000001
+Tunesd 131.02504214843816
+count0 8
+goodlordhihi
+Tunemean 54.31
+Tunesd 81.00275699011732

@@ -29,6 +29,7 @@ def reg(update: Update, context: CallbackContext):
     y = db.query_db(f'Select "name" from Usertb where "chat_id" = {chat_id}')
     try:
         code = context.args[0]
+        update.message.reply_text(f"Your code is {code}.")
     except:
         update.message.reply_text("You need to provide the code.")
         return

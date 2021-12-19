@@ -16,6 +16,18 @@ logging.basicConfig(
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
 
+def printf(s):
+    s = str(s)
+    with open("debug.txt","a") as f:
+        f.write(s)
+        f.write("\n")
+
+def telegram_announcement(msg):
+    allusers = db.query_db('Select "chat_id" from Usertb')
+    for userx in allusers:
+        chat_id = userx['chat_id']
+        bot.sendMessage(chat_id,msg)
+
 print(notelist,freqlist)
 @app.route("/savehumidity", methods=["GET"])
 def savehumid():
@@ -23,30 +35,30 @@ def savehumid():
     if humid is None:
         return "wrong request", 400
     try:
-        humid = int(humid)
+        humid = float(humid)
     except:
         return "must be integer", 400
     db.add_db("Humidity",{'humidity': humid})
     # If exceed threshold, send reminder (once every 30 mins)
-    if humid > 10:
+    if humid > 60:
         y = db.query_db("Select * from ReminderLog")
         if len(y) == 0:
             db.add_db("ReminderLog",{"remind":"humid"})
-            allusers = db.query_db('Select "chat_id" from Usertb')
             remindmsg = f"Please note that the humidity is now {humid}, please insert the humidity tube."
-            for userx in allusers:
-                chat_id = userx['chat_id']
-                bot.sendMessage(chat_id,remindmsg)
+            telegram_announcement(remindmsg)
     return "OK", 200
 
 
-@app.route("/access", methods=["POST"])
+@app.route("/access", methods=["GET"])
 def saveaccess():
-    accesscode = request.values.get("id")
+    accesscode = request.args.get("id")
+    logger.info(str(accesscode))
     allowedlist = db.query_db("Select * from RegisteredAccess")
+    print(allowedlist)
     is_allowed = False
     uname = None
     for allowed in allowedlist:
+        print(allowed['code'],accesscode)
         if allowed['code'] == accesscode:
             is_allowed = True
             uname = allowed['name']
@@ -54,19 +66,16 @@ def saveaccess():
     if is_allowed:
         db.del_dball("AccessFlag")
         db.add_db("AccessFlag",{"control":1})
-        db.add_db("AccessRecord",{"name": uname})
+        db.add_db("AccessRecord",{"uname": uname})
         db.add_db("Command",{"command":1})
         remindmsg = f"{uname} is accessing the piano."
     else:
         db.add_db("Command",{"command":2})
-        db.add_db("AccessRecord",{"name": "Unidentified (blocked)"})
+        db.add_db("AccessRecord",{"uname": "Unidentified (blocked)"})
         db.del_dball("AccessFlag")
         db.add_db("AccessFlag",{"control":0})
         remindmsg = f"An unidentified card has requested access to the piano and is blocked. If it should be allowed, please use the /register command."
-    allusers = db.query_db('Select "chat_id" from Usertb')
-    for userx in allusers:
-        chat_id = userx['chat_id']
-        bot.sendMessage(chat_id,remindmsg)
+    telegram_announcement(remindmsg)
     return "OK", 200
 
 
@@ -103,57 +112,71 @@ def threaded_control():
     while True:
         time.sleep(5)
         #Clear Reminder Log to allow new reminders
-        y = db.query_db('Select * from ReminderLog where time > now()-30m')
+        y = db.query_db('Select * from ReminderLog where time > now()-1m')
         if len(y) == 0:
             db.del_dball("ReminderLog")
         #Check if being accessed
-        z = db.query_db('Select frequency from Frequency where time > now()-10s')
+        z = db.query_db('Select frequency from Frequency where time > now()-5s')
         count = 0
         for records in z:
-            if records['frequency'] < 200:
+            if records['frequency'] >= 200:
                 count += 1
-        if count/len(z) > 0.2:
+        printf("count"+str(count)+" "+str(len(z)))
+        if count/len(z) > 0.6:
             #is_playing
             in_use = db.query_db('Select * from InuseFlag')[0]['control']
+            printf("playing!")
             if in_use == 0:
                 db.del_dball("InuseFlag")
                 db.add_db("InuseFlag",{"control":1})
                 db.add_db("UseRecord",{"start_use":1})
                 access_control = db.query_db('Select * from AccessFlag')[0]['control']
+                printf("access")
+                printf(access_control)
                 if access_control == 0:
+                    printf("hi2")
                     db.add_db("Command",{'command':3})
+                    telegram_announcement("Someone is playing on the piano without proper access!")
                 else:
-                    cuser = db.query_db('Select name from AccessRecord GROUP BY * ORDER BY DESC LIMIT 1')[0]['name']
-                    db.add_db("Command",{'command':4,'name': cuser})
+                    printf("hihi")
+                    cuser = db.query_db('Select uname from AccessRecord GROUP BY * ORDER BY DESC LIMIT 1')[0]['uname']
+                    print("user"+cuser)
+                    db.add_db("Command",{'command':4,'uname': cuser})
+                    telegram_announcement(f"The piano is being used by {cuser} now.")
         else:
             #not_playing
+            printf("goodlordhihi")
             in_use = db.query_db('Select * from InuseFlag')[0]['control']
             if in_use == 1:
+                telegram_announcement("The piano is now unoccupied.")
                 db.del_dball("InuseFlag")
                 db.add_db("InuseFlag",{"control":0})
                 db.add_db("UseRecord",{"start_use":0})
+                db.add_db("Command",{'command':5})
         # Check if tuning mode is opened.
         r = db.query_db('Select mean("frequency"),stddev("frequency") from Frequency where time > now()-3s')
         if len(r) == 0:
             tunemean,tunesd = None,None
         else:
             tunemean,tunesd = r[0]['mean'],r[0]['stddev']
-        if tunemean is not None and tunesd is not None and tunemean >= freqlist[0] and tunemean < freqlist[-1] and tunesd < 20:
-            for i,freq in enumerate(freqlist):
-                if tunemean >= freq:
-                    tempindex = i
+        printf("Tunemean "+str(tunemean))
+        printf("Tunesd "+str(tunesd))
+        if tunemean is not None and tunesd is not None and tunemean >= freqlist[0] and tunemean < freqlist[-1] and tunesd < 50:
+            printf("tuninghere")
+            for i in range(len(freqlist)-1):
+                if freqlist[i]<= tunemean and tunemean < freqlist[i+1]:
+                    tempindex = i 
                     break
+            printf(tempindex)
             correctindex = tempindex if abs(tunemean-freqlist[tempindex]) < abs(tunemean-freqlist[tempindex+1]) else tempindex + 1
             accepted_deviation = (freqlist[tempindex+1]-freqlist[tempindex])/4
+            printf(correctindex)
             if abs(tunemean-freqlist[correctindex]) > accepted_deviation:
                 db.add_db("TuneReminders",{"note":notelist[correctindex],"detected_frequency":tunemean,"correct_frequency":freqlist[correctindex]})
                 msg = f"Tune Reminder: Detected Frequency {tunemean:.2f}Hz for note {notelist[correctindex]} while the correct frequency should be {freqlist[correctindex]}Hz. A tuning service will be scheduled for you."
             else:
-                msg = f"The note {notelist[correctindex]}'s detected frequency is {truemean:.2f}Hz, which is within acceptable deviation with the true frequency {freqlist[correctindex]}Hz."
-            allusers = db.query_db('Select "chat_id" from Usertb')
-            for userx in allusers:
-                chat_id = userx['chat_id']
-                bot.sendMessage(chat_id,msg)
+                msg = f"The note {notelist[correctindex]}'s detected frequency is {tunemean:.2f}Hz, which is within acceptable deviation with the true frequency {freqlist[correctindex]}Hz."
+            telegram_announcement(msg)
         # Revoke access since time has passed
         x = db.query_db('Select * from AccessFlag where time < now()-30m  and "control" = 1')
         if len(x) > 0:
@@ -167,6 +190,7 @@ def unsafe_reset_all():
     db.del_dball("Command")
     db.del_dball("RegisteredAccess")
     db.del_dball("ReminderLog")
+    db.del_dball("AccessRecord")
     db.del_dball("InuseFlag")
     db.del_dball("Frequency")
     db.del_dball("UseRecord")
