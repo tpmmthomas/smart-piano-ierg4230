@@ -122,7 +122,7 @@ def threaded_control():
             if records['frequency'] >= 200:
                 count += 1
         printf("count"+str(count)+" "+str(len(z)))
-        if count/len(z) > 0.6:
+        if count/len(z) > 0.5:
             #is_playing
             in_use = db.query_db('Select * from InuseFlag')[0]['control']
             printf("playing!")
