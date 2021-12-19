@@ -27238,3 +27238,181 @@ Traceback (most recent call last):
   File "/usr/lib/python3.8/socketserver.py", line 466, in server_bind
     self.socket.bind(self.server_address)
 OSError: [Errno 98] Address already in use
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+Traceback (most recent call last):
+  File "app.py", line 214, in <module>
+    app.run(host='0.0.0.0',port=9876,threaded=True)
+  File "/home/thomas/.local/lib/python3.8/site-packages/flask/app.py", line 920, in run
+    run_simple(t.cast(str, host), port, self, **options)
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 1010, in run_simple
+    inner()
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 950, in inner
+    srv = make_server(
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 782, in make_server
+    return ThreadedWSGIServer(
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 688, in __init__
+    super().__init__(server_address, handler)  # type: ignore
+  File "/usr/lib/python3.8/socketserver.py", line 452, in __init__
+    self.server_bind()
+  File "/usr/lib/python3.8/http/server.py", line 138, in server_bind
+    socketserver.TCPServer.server_bind(self)
+  File "/usr/lib/python3.8/socketserver.py", line 466, in server_bind
+    self.socket.bind(self.server_address)
+OSError: [Errno 98] Address already in use
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+Traceback (most recent call last):
+  File "app.py", line 214, in <module>
+    app.run(host='0.0.0.0',port=9876,threaded=True)
+  File "/home/thomas/.local/lib/python3.8/site-packages/flask/app.py", line 920, in run
+    run_simple(t.cast(str, host), port, self, **options)
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 1010, in run_simple
+    inner()
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 950, in inner
+    srv = make_server(
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 782, in make_server
+    return ThreadedWSGIServer(
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 688, in __init__
+    super().__init__(server_address, handler)  # type: ignore
+  File "/usr/lib/python3.8/socketserver.py", line 452, in __init__
+    self.server_bind()
+  File "/usr/lib/python3.8/http/server.py", line 138, in server_bind
+    socketserver.TCPServer.server_bind(self)
+  File "/usr/lib/python3.8/socketserver.py", line 466, in server_bind
+    self.socket.bind(self.server_address)
+OSError: [Errno 98] Address already in use
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+Traceback (most recent call last):
+  File "app.py", line 214, in <module>
+    app.run(host='0.0.0.0',port=9876,threaded=True)
+  File "/home/thomas/.local/lib/python3.8/site-packages/flask/app.py", line 920, in run
+    run_simple(t.cast(str, host), port, self, **options)
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 1010, in run_simple
+    inner()
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 950, in inner
+    srv = make_server(
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 782, in make_server
+    return ThreadedWSGIServer(
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 688, in __init__
+    super().__init__(server_address, handler)  # type: ignore
+  File "/usr/lib/python3.8/socketserver.py", line 452, in __init__
+    self.server_bind()
+  File "/usr/lib/python3.8/http/server.py", line 138, in server_bind
+    socketserver.TCPServer.server_bind(self)
+  File "/usr/lib/python3.8/socketserver.py", line 466, in server_bind
+    self.socket.bind(self.server_address)
+OSError: [Errno 98] Address already in use
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+Traceback (most recent call last):
+  File "app.py", line 214, in <module>
+    app.run(host='0.0.0.0',port=9876,threaded=True)
+  File "/home/thomas/.local/lib/python3.8/site-packages/flask/app.py", line 920, in run
+    run_simple(t.cast(str, host), port, self, **options)
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 1010, in run_simple
+    inner()
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 950, in inner
+    srv = make_server(
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 782, in make_server
+    return ThreadedWSGIServer(
+  File "/home/thomas/.local/lib/python3.8/site-packages/werkzeug/serving.py", line 688, in __init__
+    super().__init__(server_address, handler)  # type: ignore
+  File "/usr/lib/python3.8/socketserver.py", line 452, in __init__
+    self.server_bind()
+  File "/usr/lib/python3.8/http/server.py", line 138, in server_bind
+    socketserver.TCPServer.server_bind(self)
+  File "/usr/lib/python3.8/socketserver.py", line 466, in server_bind
+    self.socket.bind(self.server_address)
+OSError: [Errno 98] Address already in use
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+2021-12-19 09:29:42,176 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2021-12-19 09:29:42,176 - werkzeug - INFO -  * Running on http://10.170.0.2:9876/ (Press CTRL+C to quit)
+2021-12-19 09:29:42,599 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:42] "GET /savehumidity?humidity=38.70 HTTP/1.1" 200 -
+2021-12-19 09:29:42,712 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:42] "GET /command HTTP/1.1" 200 -
+2021-12-19 09:29:42,811 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:42] "GET /audio?frequency=64.64 HTTP/1.1" 200 -
+2021-12-19 09:29:43,414 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:43] "GET /savehumidity?humidity=38.71 HTTP/1.1" 200 -
+2021-12-19 09:29:43,638 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:43] "GET /audio?frequency=57.97 HTTP/1.1" 200 -
+2021-12-19 09:29:44,336 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:44] "GET /savehumidity?humidity=38.72 HTTP/1.1" 200 -
+2021-12-19 09:29:44,543 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:44] "GET /audio?frequency=694.74 HTTP/1.1" 200 -
+2021-12-19 09:29:44,548 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:44] "GET /command HTTP/1.1" 200 -
+2021-12-19 09:29:45,155 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:45] "GET /savehumidity?humidity=38.74 HTTP/1.1" 200 -
+2021-12-19 09:29:45,365 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:45] "GET /audio?frequency=48.29 HTTP/1.1" 200 -
+2021-12-19 09:29:45,976 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:45] "GET /savehumidity?humidity=38.76 HTTP/1.1" 200 -
+2021-12-19 09:29:46,186 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:46] "GET /command HTTP/1.1" 200 -
+2021-12-19 09:29:46,193 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:46] "GET /audio?frequency=596.84 HTTP/1.1" 200 -
+2021-12-19 09:29:46,896 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:46] "GET /savehumidity?humidity=38.78 HTTP/1.1" 200 -
+2021-12-19 09:29:47,117 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:47] "GET /audio?frequency=677.09 HTTP/1.1" 200 -
+2021-12-19 09:29:47,712 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:47] "GET /command HTTP/1.1" 200 -
+2021-12-19 09:29:47,824 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:47] "GET /savehumidity?humidity=38.81 HTTP/1.1" 200 -
+2021-12-19 09:29:48,021 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:48] "GET /audio?frequency=55.65 HTTP/1.1" 200 -
+2021-12-19 09:29:48,635 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:48] "GET /savehumidity?humidity=38.82 HTTP/1.1" 200 -
+2021-12-19 09:29:48,851 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:48] "GET /audio?frequency=1559.57 HTTP/1.1" 200 -
+2021-12-19 09:29:49,249 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:49] "GET /command HTTP/1.1" 200 -
+2021-12-19 09:29:49,457 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:49] "GET /savehumidity?humidity=38.83 HTTP/1.1" 200 -
+2021-12-19 09:29:49,665 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:49] "GET /audio?frequency=242.20 HTTP/1.1" 200 -
+2021-12-19 09:29:50,275 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:50] "GET /savehumidity?humidity=38.84 HTTP/1.1" 200 -
+2021-12-19 09:29:50,483 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:50] "GET /audio?frequency=161.42 HTTP/1.1" 200 -
+2021-12-19 09:29:50,788 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:50] "GET /command HTTP/1.1" 200 -
+2021-12-19 09:29:51,094 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:51] "GET /savehumidity?humidity=38.86 HTTP/1.1" 200 -
+2021-12-19 09:29:51,317 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:51] "GET /audio?frequency=311.86 HTTP/1.1" 200 -
+2021-12-19 09:29:51,916 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:51] "GET /savehumidity?humidity=38.88 HTTP/1.1" 200 -
+2021-12-19 09:29:52,121 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:52] "GET /audio?frequency=171.77 HTTP/1.1" 200 -
+2021-12-19 09:29:52,339 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:52] "GET /command HTTP/1.1" 200 -
+2021-12-19 09:29:52,834 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:52] "GET /savehumidity?humidity=38.89 HTTP/1.1" 200 -
+2021-12-19 09:29:53,058 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:53] "GET /audio?frequency=354.20 HTTP/1.1" 200 -
+2021-12-19 09:29:53,755 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:53] "GET /savehumidity?humidity=38.99 HTTP/1.1" 200 -
+2021-12-19 09:29:53,857 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:53] "GET /command HTTP/1.1" 200 -
+2021-12-19 09:29:53,963 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:53] "GET /audio?frequency=94.78 HTTP/1.1" 200 -
+2021-12-19 09:29:54,576 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:54] "GET /savehumidity?humidity=39.07 HTTP/1.1" 200 -
+2021-12-19 09:29:54,788 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:54] "GET /audio?frequency=58.85 HTTP/1.1" 200 -
+2021-12-19 09:29:55,396 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:55] "GET /command HTTP/1.1" 200 -
+2021-12-19 09:29:55,398 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:55] "GET /savehumidity?humidity=39.13 HTTP/1.1" 200 -
+2021-12-19 09:29:55,612 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:55] "GET /audio?frequency=124.21 HTTP/1.1" 200 -
+2021-12-19 09:29:56,213 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:56] "GET /savehumidity?humidity=39.20 HTTP/1.1" 200 -
+2021-12-19 09:29:56,431 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:56] "GET /audio?frequency=206.50 HTTP/1.1" 200 -
+2021-12-19 09:29:56,928 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:56] "GET /command HTTP/1.1" 200 -
+2021-12-19 09:29:57,032 - werkzeug - INFO - 113.252.220.188 - - [19/Dec/2021 09:29:57] "GET /savehumidity?humidity=39.24 HTTP/1.1" 200 -
