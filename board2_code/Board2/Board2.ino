@@ -1,261 +1,180 @@
-/**
-   BasicHTTPClient.ino
-    Created on: 24.05.2015
+/****************************************************************************************************************************
+  Argument_None.ino
+  For ESP8266 boards
+  Written by Khoi Hoang
+  Built by Khoi Hoang https://github.com/khoih-prog/ESP8266TimerInterrupt
+  Licensed under MIT license
+  The ESP8266 timers are badly designed, using only 23-bit counter along with maximum 256 prescaler. They're only better than UNO / Mega.
+  The ESP8266 has two hardware timers, but timer0 has been used for WiFi and it's not advisable to use. Only timer1 is available.
+  The timer1's 23-bit counter terribly can count only up to 8,388,607. So the timer1 maximum interval is very short.
+  Using 256 prescaler, maximum timer1 interval is only 26.843542 seconds !!!
+  Now with these new 16 ISR-based timers, the maximum interval is practically unlimited (limited only by unsigned long miliseconds)
+  The accuracy is nearly perfect compared to software timers. The most important feature is they're ISR-based timers
+  Therefore, their executions are not blocked by bad-behaving functions / tasks.
+  This important feature is absolutely necessary for mission-critical tasks.
+*****************************************************************************************************************************/
+
+/* Notes:
+   Special design is necessary to share data between interrupt code and the rest of your program.
+   Variables usually need to be "volatile" types. Volatile tells the compiler to avoid optimizations that assume
+   variable can not spontaneously change. Because your function may change variables while your program is using them,
+   the compiler needs this hint. But volatile alone is often not enough.
+   When accessing shared variables, usually interrupts must be disabled. Even with volatile,
+   if the interrupt changes a multi-byte variable between a sequence of instructions, it can be read incorrectly.
+   If your data is multiple variables, such as an array and a count, usually interrupts need to be disabled
+   or the entire sequence of your code which accesses the data.
 */
 
-#include <Arduino.h>
+#if !defined(ESP8266)
+  #error This code is designed to run on ESP8266 and ESP8266-based boards! Please check your Tools->Board setting.
+#endif
 
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
+// These define's must be placed at the beginning before #include "ESP8266TimerInterrupt.h"
+// _TIMERINTERRUPT_LOGLEVEL_ from 0 to 4
+// Don't define _TIMERINTERRUPT_LOGLEVEL_ > 0. Only for special ISR debugging only. Can hang the system.
+#define TIMER_INTERRUPT_DEBUG         0
+#define _TIMERINTERRUPT_LOGLEVEL_     0
 
-#include <ESP8266HTTPClient.h>
-
-#include <WiFiClient.h>
-
-ESP8266WiFiMulti WiFiMulti;
-
-// Custom Definition
-#include "IERG4230.h"
-
-// Temperature & Humidity
+#include "ESP8266TimerInterrupt.h"
+#include "arduinoFFT.h"
 #include <Wire.h>
 #include "Thinary_AHT10.h"
-AHT10Class AHT10;
 
+#include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+
+String SERVER_IP="34.150.76.100:9876";
+
+#ifndef STASSID
+#define STASSID "1jwd293j2"
+#define STAPSK  "u8}926C6"
+#endif
+
+#ifndef LED_BUILTIN
+  #define LED_BUILTIN       2         // Pin D4 mapped to pin GPIO2/TXD1 of ESP8266, NodeMCU and WeMoS, control on-board LED
+#endif
+//AHT10 module
+AHT10Class AHT10;
 float Humidity;
 float Temperature;
+//FFT
+arduinoFFT FFT = arduinoFFT();
+volatile uint32_t samplei = 0;
+const uint16_t samples = 512;
+const double samplingFrequency = 8000;
+double vReal[samples];
+double vImag[samples];
+volatile int readflag=1;
 
-// Mic
-//const int micPin_analog = A0; // ADC
-//const int micPin_digital = 12;// GPIO12(D6)
+void IRAM_ATTR TimerHandler()
+{
+  if(samplei >= samples) return;
+  readflag = 1;
+//  sReal[samplei++] = (double)analogRead(A0);
+}
 
-// MAX4466
-// TODO
+#define TIMER_FREQ_HZ 8000
 
+// Init ESP8266 timer 1
+ESP8266Timer ITimer;
 
-
-// Events
-osEvent th_event, mic_event, fft_event, wifi_event;
-osEvent test_event;
-
-
-//************************************************************
-void setup() {
-  th_event.timerSet(100);
-//  mic_event.timerSet(100);
-//  fft_event.timerSet(100);
-//  wifi_event.timerSet(100);
-
-  test_event.timerSet(100);
-
-  // init for ATH10 (temperature & humidity)
-  ESP.wdtDisable();
-  ESP.wdtFeed();
-
-  Serial.begin(115200);
+void setup()
+{
+  Serial.begin(9600);
+  while (!Serial);
   Wire.begin(2,0);
-
   if(AHT10.begin(eAHT10Address_Low))
     Serial.println("Init AHT10 Sucess.");
   else
     Serial.println("Init AHT10 Failure.");
   Serial.println("<<Thinary Eletronic AHT10 Module>>");
+  
+  delay(300);
+   WiFi.begin(STASSID, STAPSK);
 
-  delay(500);
-
-  // init for mic
-//  pinMode(micPin_analog, INPUT);
-//  pinMode(micPin_digital, INPUT);
-
-  // init for MAX4466 (FFT) 
-  // TODO
-
-
-
-  // Serial.setDebugOutput(true);
-
-//  Serial.println();
-//  Serial.println();
-//  Serial.println();
-//
-//  for (uint8_t t = 4; t > 0; t--) {
-//    Serial.printf("[SETUP] WAIT %d...\n", t);
-//    Serial.flush();
-//    delay(1000);
-//  }
-
-  WiFi.mode(WIFI_STA);
-  WiFiMulti.addAP("REALNEW", "1155147592");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("Connected! IP address: ");
+  Serial.println(WiFi.localIP());
+  // Interval in microsecs
+  if (ITimer.attachInterrupt(TIMER_FREQ_HZ, TimerHandler))
+  {
+    Serial.println(("Starting  ITimer OK"));
+  }
+  else
+    Serial.println(("Can't set ITimer correctly. Select another freq. or interval"));
+  pinMode(A0,INPUT);
+  pinMode(12,INPUT);
+  delay(2000);
+ 
 }
 
-void loop() {
-
-  if (osEvent::osTimer != millis()) timeStampUpdate();
-  if (th_event.isSet()) th_event_handler();
-//  if (mic_event.isSet()) mic_event_handler();
-//  if (fft_event.isSet()) fft_event_handler();
-//  if (wifi_event.isSet()) wifi_event_handler();
-
-  if (test_event.isSet()) test_event_handler();
-
-
-
-//  delay(10000);
-}
-
-void timeStampUpdate(void)   // no need to modify this function unless you know what you are doing.
+void loop()
 {
-  int i;
-  unsigned long temp;
-  temp = millis();
-  if (osEvent::osTimer > temp) i = 1;
-  else i = (int)(temp - osEvent::osTimer);
-  osEvent::osTimer = temp;
-  //---- user add their own tasks if necessary
-  th_event.timerUpdate(i);
-//  mic_event.timerUpdate(i);
-//  fft_event.timerUpdate(i);
-//  wifi_event.timerUpdate(i);
-
-  test_event.timerUpdate(i);
-}
-
-// Event Handlers
-void th_event_handler(void){
-  th_event.clean();
-
-  // get the temperature & humidity
-  Temperature = AHT10.GetTemperature();
-  Humidity = AHT10.GetHumidity();
-
-  Serial.println(String("") + "Temperature(℃):\t" + Temperature + "℃");
-  Serial.println(String("") + "Humidity(%RH):\t\t" + Humidity + "%");
-  Serial.println();
-
-  ESP.wdtFeed();
-
-  // send data to server
-  // TODO
-  if ((WiFiMulti.run() == WL_CONNECTED)) {
-
-    WiFiClient client;
-
-    HTTPClient http;
-
-    Serial.print("[HTTP] begin...\n");
-    if (http.begin(client, "http://34.150.76.100:9876")) {  // HTTP
-
-      Serial.print("[HTTP] GET...\n");
-      // start connection and send HTTP header
-      int httpCode = http.GET();
-//      int httpCode = http.POST("temp="+to_string(Temperature)+"?humid="+to_string(Humidity));
-//      int httpCode = http.POST("123");
-
-      // httpCode will be negative on error
-      if (httpCode > 0) {
-        // HTTP header has been send and Server response header has been handled
-        Serial.printf("[HTTP] GET... code: %d\n", httpCode);
-
-        // file found at server
-        if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
-          String payload = http.getString();
-          Serial.println(payload);
-        }
-      } else {
-        Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-      }
-
-      http.end();
-    } else {
-      Serial.printf("[HTTP} Unable to connect\n");
-    }
+  if(readflag){
+    vImag[samplei] = 0.0;
+    vReal[samplei++] = (double)analogRead(A0);
+    readflag = 0;
   }
-
-  // monitor every 15 seconds
-  th_event.timerSet(15000);
-}
-
-
-//void mic_event_handler(void){
-//  mic_event.clean();
-//  
-//  // get the sound
-//  int micA_Status = analogRead(micPin_analog); // Analog value 0~1023
-//  int micD_Status = digitalRead(micPin_digital); // Digital value 0 = volulme lager than threshold
-//
-//  Serial.print("Mic(Analog)=");
-//  Serial.println(micA_Status);        // Display analog value
-//  Serial.print("Mic(Digital)=");
-//  Serial.println(micD_Status);        // Display digital value
-//
-//  // do something when volume exceeds threshold
-//  if (micA_Status >= 535) {
-//    Serial.println("Sound detected");
-//  }
-//  else {
-//    Serial.println("No sound detected");
-//  }
-//
-//  // monitor every 0.5 seconds
-//  mic_event.timerSet(500);
-//}
-
-
-//void fft_event_handler(void){
-//  fft_event.clean();
-//
-//  Serial.println("FFT");
-//  fft_event.timerSet(1000);
-//}
-
-
-void wifi_event_handler(void){
-//  wifi_event.clean();
-  Serial.println("Wi-Fi");
-
-  // PROBLEM: Must run the below then other code, no multitasking
-
-  // wait for WiFi connection
-  if ((WiFiMulti.run() == WL_CONNECTED)) {
-
-    WiFiClient client;
-
-    HTTPClient http;
-
-    Serial.print("[HTTP] begin...\n");
-    if (http.begin(client, "http://jigsaw.w3.org/HTTP/connection.html")) {  // HTTP
-
-      Serial.print("[HTTP] GET...\n");
-      // start connection and send HTTP header
-      int httpCode = http.GET();
-
-      // httpCode will be negative on error
-      if (httpCode > 0) {
-        // HTTP header has been send and Server response header has been handled
-        Serial.printf("[HTTP] GET... code: %d\n", httpCode);
-
-        // file found at server
-        if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
-          String payload = http.getString();
-          Serial.println(payload);
+  if(samplei >= samples){
+    FFT.Windowing(vReal,samples,FFT_WIN_TYP_HAMMING,FFT_FORWARD);
+    FFT.Compute(vReal, vImag, samples, FFT_FORWARD);
+    FFT.ComplexToMagnitude(vReal, vImag, samples);
+    double x = FFT.MajorPeak(vReal, samples, samplingFrequency);
+    Serial.print("Calculated Frequency: ");
+    Serial.println(x,6);
+    delay(100);
+    Humidity = AHT10.GetHumidity();
+    Serial.println(String("") + "Humidity(%RH):\t" + Humidity + "%");
+    if ((WiFi.status() == WL_CONNECTED)) {
+      WiFiClient client;
+      HTTPClient http;
+  
+      Serial.print("[HTTP] begin...\n");
+      // configure traged server and url
+      String url = "http://"+SERVER_IP+"/savehumidity?humidity="+String(Humidity,2);
+      if(http.begin(client, url)){
+        int httpCode = http.GET();
+        if (httpCode > 0) {
+          // HTTP header has been send and Server response header has been handled
+          Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+  
+          // file found at server
+          if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+            String payload = http.getString();
+            Serial.println(payload);
+          }
+        } else {
+          Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
         }
+        http.end();
       } else {
-        Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+        Serial.printf("[HTTP} Unable to connect\n");
       }
-
-      http.end();
-    } else {
-      Serial.printf("[HTTP} Unable to connect\n");
+      url = "http://"+SERVER_IP+"/audio?frequency="+String(x,2);
+      if(http.begin(client, url)){
+        int httpCode = http.GET();
+        if (httpCode > 0) {
+          // HTTP header has been send and Server response header has been handled
+          Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+  
+          // file found at server
+          if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+            String payload = http.getString();
+            Serial.println(payload);
+          }
+        } else {
+          Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+        }
+        http.end();
+      } else {
+        Serial.printf("[HTTP} Unable to connect\n");
+      }
     }
+    samplei = 0;
+    delay(100);
   }
-
-//  wifi_event.timerSet(10000);
-}
-
-
-void test_event_handler(void){
-  test_event.clean();
-
-  Serial.println("HELLOP");
-  test_event.timerSet(1000);
 }

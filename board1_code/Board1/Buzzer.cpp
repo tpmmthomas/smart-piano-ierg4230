@@ -50,7 +50,6 @@ void Buzzer::sound(int note, int duration) {
         digitalWrite(this->pinLED, LOW);
 
     noTone(this->pinBuzzer);
-    
     delay(((duration * this->pause) / 100));
 }
 
